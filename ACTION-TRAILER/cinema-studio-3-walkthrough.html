@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Action Trailer — Cinema Studio 3.0 Production Guide</title>
+<style>
+  /* ── DESIGN TOKENS ──────────────────────────────── */
+  :root {
+    --bg:          #080808;
+    --surface:     #101010;
+    --card:        #141414;
+    --card-hover:  #1a1a1a;
+    --gold:        #C9A84C;
+    --gold-dim:    rgba(201,168,76,0.15);
+    --gold-border: rgba(201,168,76,0.3);
+    --crimson:     #C0392B;
+    --crimson-dim: rgba(192,57,43,0.15);
+    --blue:        #3B82F6;
+    --blue-dim:    rgba(59,130,246,0.12);
+    --white:       #FFFFFF;
+    --grey-1:      #E8E8E8;
+    --grey-2:      #9A9A9A;
+    --grey-3:      #4A4A4A;
+    --border:      rgba(255,255,255,0.07);
+    --text-hero:   clamp(42px, 6vw, 88px);
+    --text-h2:     clamp(24px, 3vw, 40px);
+    --text-h3:     clamp(18px, 2vw, 24px);
+    --text-body:   16px;
+    --text-sm:     13px;
+    --space-section: clamp(80px, 10vw, 140px);
+    --radius:      12px;
+    --radius-lg:   20px;
+  }
+
+  /* ── RESET & BASE ──────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--grey-1);
+    line-height: 1.65;
+    font-size: var(--text-body);
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--gold-dim); color: var(--gold); }
+
+  /* ── NOISE OVERLAY ──────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ──────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 clamp(24px, 5vw, 80px);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey-2);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── LAYOUT ──────────────────────────────────── */
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 80px);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HERO ──────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: clamp(60px, 8vw, 120px);
+    padding-top: 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 30%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 10% 80%, rgba(192,57,43,0.05) 0%, transparent 60%),
+      linear-gradient(180deg, #0a0a0a 0%, #080808 100%);
+    z-index: 0;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+  .hero-title {
+    font-size: var(--text-hero);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, var(--gold) 0%, #E8CC7A 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(16px, 1.5vw, 20px);
+    color: var(--grey-2);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .tag-gold  { color: var(--gold);    border-color: var(--gold-border);    background: var(--gold-dim); }
+  .tag-red   { color: #FF6B6B;        border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.1); }
+  .tag-blue  { color: #60A5FA;        border-color: rgba(96,165,250,0.3);  background: var(--blue-dim); }
+  .tag-white { color: var(--grey-2);  border-color: var(--border);         background: rgba(255,255,255,0.04); }
+
+  /* ── SECTION HEADERS ─────────────────────────── */
+  section { padding: var(--space-section) 0; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-border), transparent);
+    max-width: 120px;
+  }
+  .section-title {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 15px;
+    color: var(--grey-2);
+    max-width: 600px;
+    line-height: 1.75;
+    margin-bottom: 48px;
+  }
+
+  /* ── GLASS CARD ─────────────────────────────── */
+  .glass {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    transition: background 250ms ease, border-color 250ms ease;
+  }
+  .glass:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.11);
+  }
+
+  /* ── STEP CARDS ─────────────────────────────── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 24px;
+    padding: 28px 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+    transition: background 220ms ease, border-color 220ms ease;
+    align-items: start;
+  }
+  .step:hover {
+    background: var(--card-hover);
+    border-color: rgba(255,255,255,0.1);
+  }
+  .step-num {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .step-num.gold   { background: var(--gold-dim);    border: 1px solid var(--gold-border);    color: var(--gold); }
+  .step-num.crimson{ background: var(--crimson-dim); border: 1px solid rgba(192,57,43,0.3);   color: #E57373; }
+  .step-num.blue   { background: var(--blue-dim);    border: 1px solid rgba(59,130,246,0.25); color: #93C5FD; }
+  .step-title { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+  .step-body  { font-size: 14px; color: var(--grey-2); line-height: 1.7; }
+  .step-body strong { color: var(--grey-1); }
+
+  /* ── SETTINGS GRID ──────────────────────────── */
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .setting-card {
+    padding: 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+    transition: border-color 220ms ease;
+  }
+  .setting-card:hover { border-color: var(--gold-border); }
+  .setting-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey-3);
+    margin-bottom: 10px;
+  }
+  .setting-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .setting-note {
+    font-size: 12px;
+    color: var(--grey-2);
+    line-height: 1.6;
+  }
+  .setting-value.gold { color: var(--gold); }
+  .setting-value.crimson { color: #FF6B6B; }
+  .setting-value.blue { color: #93C5FD; }
+
+  /* ── SHOT TIMELINE ──────────────────────────── */
+  .timeline { display: flex; flex-direction: column; gap: 3px; }
+  .shot {
+    display: grid;
+    grid-template-columns: 100px 1fr 140px;
+    gap: 20px;
+    align-items: center;
+    padding: 18px 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+    transition: background 200ms ease;
+  }
+  .shot:hover { background: var(--card-hover); }
+  .shot.highlight {
+    border-color: rgba(201,168,76,0.25);
+    background: rgba(201,168,76,0.04);
+  }
+  .shot-time {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .shot-content { min-width: 0; }
+  .shot-name { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  .shot-desc { font-size: 12px; color: var(--grey-2); line-height: 1.5; }
+  .shot-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    justify-self: end;
+  }
+  .badge-low  { background: rgba(74,222,128,0.1);  color: #4ADE80; border: 1px solid rgba(74,222,128,0.2); }
+  .badge-med  { background: rgba(251,191,36,0.1);  color: #FBBF24; border: 1px solid rgba(251,191,36,0.2); }
+  .badge-high { background: rgba(239,68,68,0.12);  color: #F87171; border: 1px solid rgba(239,68,68,0.25); }
+  .badge-max  { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid var(--gold-border); }
+
+  /* ── DENSITY MAP ──────────────────────────── */
+  .density-map {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    overflow: hidden;
+  }
+  .density-track {
+    display: flex;
+    height: 48px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 24px 0 16px;
+    gap: 2px;
+  }
+  .d-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: opacity 200ms;
+    cursor: default;
+  }
+  .d-seg:hover { opacity: 0.85; }
+  .d-low   { background: rgba(74,222,128,0.25);  color: #4ADE80; }
+  .d-build { background: rgba(251,191,36,0.25);  color: #FBBF24; }
+  .d-max   { background: rgba(239,68,68,0.35);   color: #F87171; }
+  .d-peak  { background: rgba(201,168,76,0.4);   color: var(--gold); }
+  .d-hold  { background: rgba(59,130,246,0.25);  color: #93C5FD; }
+  .density-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--grey-3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── ENERGY ARC ──────────────────────────────── */
+  .arc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .arc-phase {
+    padding: 20px 16px;
+    border-radius: var(--radius);
+    text-align: center;
+    position: relative;
+  }
+  .arc-phase::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--grey-3);
+    font-size: 14px;
+    z-index: 2;
+  }
+  .arc-phase:last-child::after { display: none; }
+  .arc-1 { background: rgba(59,130,246,0.1);  border: 1px solid rgba(59,130,246,0.2); }
+  .arc-2 { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.2); }
+  .arc-3 { background: rgba(239,68,68,0.1);   border: 1px solid rgba(239,68,68,0.25); }
+  .arc-4 { background: var(--gold-dim);       border: 1px solid var(--gold-border); }
+  .arc-icon { font-size: 24px; margin-bottom: 8px; }
+  .arc-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .arc-time { font-size: 11px; color: var(--grey-2); }
+
+  /* ── EFFECTS LIST ──────────────────────────── */
+  .effects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .effect-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+  .effect-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .dot-gold   { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+  .dot-red    { background: #F87171;     box-shadow: 0 0 8px rgba(248,113,113,0.5); }
+  .dot-blue   { background: #93C5FD;     box-shadow: 0 0 8px rgba(147,197,253,0.5); }
+  .dot-white  { background: var(--grey-2); }
+  .effect-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+  .effect-desc { font-size: 12px; color: var(--grey-2); }
+
+  /* ── PROMPT BOX ──────────────────────────────── */
+  .prompt-box {
+    position: relative;
+    background: #0D0D0D;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+  .prompt-lang {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey-3);
+  }
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--grey-2);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 180ms ease;
+  }
+  .copy-btn:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold-border);
+    color: var(--gold);
+  }
+  .copy-btn.copied {
+    background: rgba(74,222,128,0.1);
+    border-color: rgba(74,222,128,0.3);
+    color: #4ADE80;
+  }
+  .prompt-body {
+    padding: 24px;
+    font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #C8D3E8;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 480px;
+    overflow-y: auto;
+  }
+  .prompt-body::-webkit-scrollbar { width: 4px; }
+  .prompt-body::-webkit-scrollbar-track { background: transparent; }
+  .prompt-body::-webkit-scrollbar-thumb { background: var(--grey-3); border-radius: 2px; }
+
+  /* ── INPUT TYPES ──────────────────────────── */
+  .input-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .input-card {
+    padding: 28px 24px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+  .input-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .input-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .input-limit {
+    display: inline-flex;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .input-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .input-list li {
+    font-size: 13px;
+    color: var(--grey-2);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .input-list li::before { content: '·'; color: var(--gold); font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: -2px; }
+
+  /* ── DIVIDER ──────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* ── CALLOUT ──────────────────────────────── */
+  .callout {
+    display: flex;
+    gap: 16px;
+    padding: 20px 24px;
+    border-radius: var(--radius);
+    margin-bottom: 32px;
+  }
+  .callout-gold   { background: var(--gold-dim);    border-left: 3px solid var(--gold); }
+  .callout-red    { background: var(--crimson-dim); border-left: 3px solid var(--crimson); }
+  .callout-blue   { background: var(--blue-dim);    border-left: 3px solid var(--blue); }
+  .callout-icon   { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .callout-text   { font-size: 14px; color: var(--grey-1); line-height: 1.65; }
+  .callout-text strong { color: var(--white); }
+
+  /* ── SPEED RAMP TABLE ─────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey-3);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: top;
+    color: var(--grey-2);
+    line-height: 1.5;
+  }
+  tbody td:first-child { color: var(--white); font-weight: 600; }
+  tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── TWO-COL ──────────────────────────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer {
+    padding: 60px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--grey-3);
+    letter-spacing: 0.06em;
+    position: relative;
+    z-index: 1;
+  }
+  footer span { color: var(--gold); }
+
+  /* ── REVEAL ANIMATION ─────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 768px) {
+    .input-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .arc-grid { grid-template-columns: repeat(2, 1fr); }
+    .shot { grid-template-columns: 80px 1fr; }
+    .shot-badge { display: none; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Action Trailer — Production Guide</span>
+  <ul class="nav-links">
+    <li><a href="#soul-id">Soul ID</a></li>
+    <li><a href="#armor-image">Armor</a></li>
+    <li><a href="#inputs">Inputs</a></li>
+    <li><a href="#settings">CS3 Settings</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#prompts">Prompts</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap" style="position:relative;z-index:1;">
+    <p class="hero-eyebrow">Cinema Studio 3.0 · Seedance 2.0</p>
+    <h1 class="hero-title">
+      Human to<br><span>Armored Warrior</span><br>Transformation
+    </h1>
+    <p class="hero-sub">
+      Step-by-step production guide for a 12-second Marvel-style action trailer.
+      Built for Cinema Studio 3.0 using your own photo as the start frame.
+    </p>
+    <div class="hero-tags">
+      <span class="tag tag-gold">12-Second Shot</span>
+      <span class="tag tag-red">Hyper-Real VFX</span>
+      <span class="tag tag-blue">Soul ID · Your Face</span>
+      <span class="tag tag-white">Seedance 2.0 · 4K Native</span>
+      <span class="tag tag-white">Action Genre</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SOUL ID ─────────────────────────────── -->
+<section id="soul-id">
+  <div class="wrap">
+    <p class="section-label">Step 0 · Before You Generate Anything</p>
+    <h2 class="section-title">Soul ID Setup</h2>
+    <p class="section-desc">
+      Soul ID locks your face into every generated shot. Without it, Higgsfield uses a generic character.
+      With it, <em>you</em> are the armored warrior in every frame.
+    </p>
+
+    <div class="callout callout-gold reveal">
+      <span class="callout-icon">⚡</span>
+      <p class="callout-text">
+        <strong>Do this first — before anything else.</strong> Soul ID is the foundation of the entire shoot.
+        All 8 shots reference your locked character. If Soul ID isn't set up, every shot drifts to a random face.
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div><span class="step-num gold">01</span></div>
+        <div>
+          <p class="step-title">Go to higgsfield.ai → Soul ID</p>
+          <p class="step-body">Find Soul ID in the left sidebar or top navigation. This is where you create a persistent character identity the model will use across all shots.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div><span class="step-num gold">02</span></div>
+        <div>
+          <p class="step-title">Upload 20–30 photos of yourself</p>
+          <p class="step-body">
+            <strong>Photo requirements:</strong><br>
+            · Mix of angles: front-facing, 3/4 left, 3/4 right, side profile<br>
+            · Mix of lighting: daylight, indoor, bright, dimmer conditions<br>
+            · Some with glasses or accessories if you wear them, some without<br>
+            · Neutral expressions AND a few natural ones<br>
+            · <strong>No heavy filters, no Facetune, no sunglasses</strong> — the model needs your actual face<br>
+            · Photos from the last 2 years work best
+          </p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div><span class="step-num gold">03</span></div>
+        <div>
+          <p class="step-title">Wait for training to complete</p>
+          <p class="step-body">Training takes 5–15 minutes. You'll get a notification. Once complete, your Soul ID appears as a selectable character in the VIDEO tab and Cinema Studio.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div><span class="step-num gold">04</span></div>
+        <div>
+          <p class="step-title">Test with a single shot first</p>
+          <p class="step-body">Before running the full 8-shot sequence, generate one test shot — a simple medium close-up of your character in normal clothes. If the face looks like you, Soul ID is working. If it drifts, upload 5–10 more photos focusing on your face at different angles.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── ARMOR IMAGE ──────────────────────────── -->
+<section id="armor-image">
+  <div class="wrap">
+    <p class="section-label">Step 0b · Before Soul ID Test Shot</p>
+    <h2 class="section-title">Generate Your Armor Reference Image</h2>
+    <p class="section-desc">
+      Create the armor design first. Then load it as <strong>@ref2</strong> in CS3.
+      This gives Cinema Studio a locked visual target for the armor design — without
+      forcing a rigid end frame. The transformation feels organic, the armor looks exactly like yours.
+    </p>
+
+    <div class="callout callout-gold reveal">
+      <span class="callout-icon">🛡</span>
+      <p class="callout-text">
+        <strong>Why reference instead of end frame?</strong> Using the armor as @ref2 gives CS3 the design language
+        without locking every pixel of the final frame. The transformation sequence stays fluid and
+        cinematic. CS3 interprets the design intent rather than snapping to a frozen image.
+      </p>
+    </div>
+
+    <div class="two-col reveal" style="margin-bottom:24px;">
+      <div class="setting-card">
+        <p class="setting-label">Where to generate</p>
+        <p class="setting-value">Higgsfield Image Generator</p>
+        <p class="setting-note">Or use Midjourney, Flux Dev, or Stable Diffusion. Any photorealistic model works — you just need the output image file.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">How to use in CS3</p>
+        <p class="setting-value gold">Ref Slot 2 → @ref2</p>
+        <p class="setting-note">Upload generated armor image to Reference Slot 2 in CS3. Tag it as @ref2 in your video prompt wherever armor is described.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px;font-weight:600;color:var(--white);margin-bottom:16px;">
+      Armor Image Prompt <span style="color:var(--grey-3);font-size:13px;font-weight:400;margin-left:8px;">→ Higgsfield / Midjourney / Flux</span>
+    </h3>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Armor Image · Text-to-Image Prompt</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">Full body shot of a battle-ready tactical warrior in hyper-real live action style.
+Wearing custom-engineered body armor — gunmetal grey primary plates with midnight
+blue accent panels on shoulders and chest. Geometric angular plate design: layered
+chest armor, articulated shoulder guards with sharp angular geometry, gauntleted
+forearms with knuckle plate detail, plated thighs and armored boots. Suit seam
+lines emit a faint electric blue glow. Full enclosed tactical helmet with smooth
+angular faceplate and amber-tinted visor.
+
+Armor is clean, grounded, military-grade — not fantasy, not sci-fi robot.
+Think Iron Man meets HALO meets Ghost of Tsushima. Premium materials:
+brushed gunmetal metal with matte finish, midnight blue composite panels.
+Subtle wear marks suggesting real use.
+
+Standing upright, neutral pose, facing slightly toward camera. Dark studio void
+background — pure black. Single strong directional key light from upper camera-left
+catching metallic edges. Anamorphic horizontal lens flares on chest plate.
+Teal + orange color grade. Film grain. ARRI Alexa 35 cinematography aesthetic.
+Ultra high detail, 4K, photorealistic.</div>
+    </div>
+
+    <div class="steps" style="margin-top:32px;">
+      <div class="step reveal">
+        <div><span class="step-num gold">01</span></div>
+        <div>
+          <p class="step-title">Generate the armor image</p>
+          <p class="step-body">Paste the prompt above into your image generator of choice. Generate 4–8 variations. Pick the one that feels most like <em>your</em> armor — the design that resonates. You can iterate on the prompt: change color scheme, tweak the helmet style, adjust shoulder guard geometry.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div><span class="step-num gold">02</span></div>
+        <div>
+          <p class="step-title">Upload to CS3 as Reference Slot 2</p>
+          <p class="step-body">In Cinema Studio 3.0, open the Reference panel. Upload your armor image to <strong>Slot 2</strong>. CS3 will tag it automatically — confirm it's labeled <code>@ref2</code> in the reference panel.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div><span class="step-num gold">03</span></div>
+        <div>
+          <p class="step-title">Tag @ref2 in your video prompt</p>
+          <p class="step-body">In the Main Video Prompt (see Prompts section below), wherever armor is described — add <code>@ref2</code> inline. Example: <em>"Armor plates materialize — gunmetal grey with midnight blue accents @ref2 — snapping onto the body with magnetic force."</em> CS3's Cinematic Reasoning Engine reads the tag and pulls visual data from your armor image.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div><span class="step-num blue">04</span></div>
+        <div>
+          <p class="step-title">Reference slot map for this project</p>
+          <p class="step-body">
+            <strong>@ref1</strong> — Soul ID character sheet (your face + body) — auto-linked when Soul ID is active<br>
+            <strong>@ref2</strong> — Your generated armor image<br>
+            <strong>@ref3</strong> — Location/environment (dark rooftop, storm, city below)<br>
+            <strong>Video clip (optional):</strong> A Marvel trailer sequence for camera movement reference
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── INPUTS ──────────────────────────────── -->
+<section id="inputs">
+  <div class="wrap">
+    <p class="section-label">Step 1 · What You Feed Cinema Studio 3.0</p>
+    <h2 class="section-title">Multimodal Input Stack</h2>
+    <p class="section-desc">
+      Cinema Studio 3.0 accepts up to <strong>12 inputs simultaneously</strong> — 9 images, 3 video clips, 3 audio clips.
+      Here is exactly what to load for this transformation trailer.
+    </p>
+
+    <div class="input-grid reveal">
+      <!-- IMAGE -->
+      <div class="input-card">
+        <span class="input-icon">🖼</span>
+        <p class="input-title">Reference Images</p>
+        <span class="input-limit tag tag-gold">Up to 9 slots</span>
+        <ul class="input-list">
+          <li><strong>Slot 1:</strong> Your Soul ID character sheet (auto-linked if Soul ID is active)</li>
+          <li><strong>Slot 2:</strong> Armor reference — gunmetal/midnight blue tactical suit. Pull from concept art, game screenshots (Halo, Destiny, Iron Man)</li>
+          <li><strong>Slot 3:</strong> Location/environment — dark rain-slicked rooftop, city glow below, storm approaching</li>
+          <li><strong>Slot 4 (optional):</strong> Mood/lighting reference — a Marvel BTS still or a cinematography reference for the color grade</li>
+          <li>Use <code>@ref1</code> <code>@ref2</code> <code>@ref3</code> tags in your text prompt to call each one</li>
+        </ul>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="input-card">
+        <span class="input-icon">🎬</span>
+        <p class="input-title">Video Reference Clips</p>
+        <span class="input-limit tag tag-blue">Up to 3 slots</span>
+        <ul class="input-list">
+          <li><strong>Clip 1 (optional but powerful):</strong> A Marvel trailer sequence — Iron Man suiting up, Black Panther transformation, Thor lightning reveal. CS3 reads the camera movement and energy rhythm and applies it to your shot</li>
+          <li><strong>Clip 2 (optional):</strong> A slow-motion VFX reference — suit assembly, particle effects, energy surge</li>
+          <li>Even a 5-second clip is enough. CS3 extracts the motion language, not the content</li>
+        </ul>
+      </div>
+
+      <!-- AUDIO -->
+      <div class="input-card">
+        <span class="input-icon">🎵</span>
+        <p class="input-title">Audio Input</p>
+        <span class="input-limit tag tag-white">Up to 3 slots</span>
+        <ul class="input-list">
+          <li><strong>Option A (recommended):</strong> Upload a piece of cinematic music — Hans Zimmer style, 15–30 seconds. CS3 uses the beat to time the transformation peak and the hero reveal</li>
+          <li><strong>Option B:</strong> No audio input — CS3 generates its own soundtrack in the Action genre</li>
+          <li><strong>Option C:</strong> Use CS3's Native Audio — select a sound design style from the Audio tab. Choose "Epic Orchestra" or "Hybrid Trailer"</li>
+          <li>Music-first workflow: generating audio first and then letting the visuals sync to the beat produces the most cinematic result</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SETTINGS ──────────────────────────── -->
+<section id="settings">
+  <div class="wrap">
+    <p class="section-label">Step 2 · Cinema Studio 3.0 Configuration</p>
+    <h2 class="section-title">Panel Settings</h2>
+    <p class="section-desc">
+      Every dial set precisely for a Marvel-style hyper-real transformation. Copy these settings exactly before generating.
+    </p>
+
+    <div class="callout callout-red reveal">
+      <span class="callout-icon">🎯</span>
+      <p class="callout-text">
+        <strong>Path:</strong> higgsfield.ai → Cinema Studio 3.0 → New Project → set all values below before pressing Generate.
+      </p>
+    </div>
+
+    <div class="settings-grid reveal">
+      <div class="setting-card">
+        <p class="setting-label">Model</p>
+        <p class="setting-value gold">Seedance 2.0</p>
+        <p class="setting-note">Most physics-aware, highest motion stability. Do not use Seedance 1.0.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Genre</p>
+        <p class="setting-value">Action</p>
+        <p class="setting-note">Action genre activates: high-contrast lighting, fast shutter-style motion blur, punchy color grade, cinematic character framing.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Duration</p>
+        <p class="setting-value gold">12 seconds</p>
+        <p class="setting-note">Maximum controllable range for a single transformation arc. CS3 handles up to 15s.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Output Resolution</p>
+        <p class="setting-value">4K Native</p>
+        <p class="setting-note">Seedance 2.0 outputs native 4K. Do not upscale — you lose the grain and lens characteristics.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Speed Ramp — Primary</p>
+        <p class="setting-value crimson">Impact</p>
+        <p class="setting-note">Builds tension slowly, hits a peak moment with compressed speed, then eases into aftermath. Used for the transformation beat at 00:02.5.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Speed Ramp — Secondary</p>
+        <p class="setting-value blue">Bullet Time</p>
+        <p class="setting-note">Ultra slow-motion at the hero reveal (00:07–00:09). Character in full armor, camera orbiting. This is the money shot.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Camera Sensor</p>
+        <p class="setting-value">ARRI Alexa 35</p>
+        <p class="setting-note">Organic color science, natural grain structure, the sensor Marvel and DC actually use. Best cinematic response to dark scenes.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Lens</p>
+        <p class="setting-value">35mm Anamorphic</p>
+        <p class="setting-note">Wide enough for full-body shots, tight enough for the face reveal. Anamorphic gives horizontal lens flares on the armor's metallic edges.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Aperture</p>
+        <p class="setting-value">f/2.0 – f/2.8</p>
+        <p class="setting-note">Shallow depth of field. Background city lights become golden bokeh orbs. Character stays in crisp focus.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Color Grade</p>
+        <p class="setting-value">Teal + Orange</p>
+        <p class="setting-note">Classic blockbuster grade — skin tones pushed warm orange, backgrounds and shadows pushed cool teal. Request explicitly in your prompt.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Physics Engine</p>
+        <p class="setting-value gold">ON — High</p>
+        <p class="setting-note">Essential for armor assembly. Physics engine calculates momentum of plates snapping to body, cape/cloth dynamics, particle impacts.</p>
+      </div>
+      <div class="setting-card">
+        <p class="setting-label">Character Consistency</p>
+        <p class="setting-value gold">Soul ID — Active</p>
+        <p class="setting-note">Link your Soul ID character to every shot in the multi-shot panel. Your face persists across all 8 shots.</p>
+      </div>
+    </div>
+
+    <!-- Speed Ramp Table -->
+    <h3 class="section-title reveal" style="font-size:22px;margin-top:56px;margin-bottom:24px;">
+      All 8 Speed Ramp Presets — Reference
+    </h3>
+    <div class="glass reveal" style="padding:0;overflow:hidden;">
+      <table>
+        <thead>
+          <tr>
+            <th>Preset</th>
+            <th>Behaviour</th>
+            <th>Best Use in This Trailer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Linear</td>
+            <td>Constant speed. No ramp.</td>
+            <td>Avoid — no cinematic tension</td>
+          </tr>
+          <tr>
+            <td>Auto</td>
+            <td>AI decides based on content</td>
+            <td>Fallback when unsure</td>
+          </tr>
+          <tr>
+            <td>Flash In</td>
+            <td>Starts fast, decelerates</td>
+            <td>Opening shot — storm approach entering frame</td>
+          </tr>
+          <tr>
+            <td>Flash Out</td>
+            <td>Starts slow, accelerates out</td>
+            <td>Transition from calm to transformation beat</td>
+          </tr>
+          <tr>
+            <td>Slow-mo</td>
+            <td>Sustained slow motion throughout</td>
+            <td>Armor surface detail shots</td>
+          </tr>
+          <tr>
+            <td>Bullet Time</td>
+            <td>Extreme slow-motion, camera orbits</td>
+            <td>Hero reveal (00:07–00:09) — the money shot</td>
+          </tr>
+          <tr style="background:rgba(192,57,43,0.05);">
+            <td>Impact ★</td>
+            <td>Build → hit → slow aftermath</td>
+            <td><strong>Transformation peak (00:02.5–00:06)</strong> — primary preset</td>
+          </tr>
+          <tr>
+            <td>Ramp Up</td>
+            <td>Slow start, accelerates to end</td>
+            <td>Power demonstration walk (00:09–00:11)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── TIMELINE ──────────────────────────── -->
+<section id="timeline">
+  <div class="wrap">
+    <p class="section-label">Step 3 · Shot-by-Shot Breakdown</p>
+    <h2 class="section-title">8-Shot Timeline</h2>
+    <p class="section-desc">
+      The full 12-second arc from human to armored warrior. Each shot has a density rating
+      indicating how many VFX layers are active simultaneously.
+    </p>
+
+    <div class="timeline reveal">
+      <div class="shot">
+        <p class="shot-time">00:00–00:02</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 1 — The Calm Before</p>
+          <p class="shot-desc">Wide. You stand on the rain-slicked rooftop, facing away from camera, city glow below. Storm clouds roll in. Hair moves in rising wind. Camera holds static, wide anamorphic. This is the only quiet moment.</p>
+        </div>
+        <span class="shot-badge badge-low">Low Density</span>
+      </div>
+      <div class="shot">
+        <p class="shot-time">00:02–00:02.5</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 2 — The Signal</p>
+          <p class="shot-desc">Lightning splits the sky. ECU insert: your eyes catching the flash. Pupils contract. Jaw sets. This is the decision moment — the human chooses.</p>
+        </div>
+        <span class="shot-badge badge-med">Medium</span>
+      </div>
+      <div class="shot highlight">
+        <p class="shot-time">00:02.5–00:05</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 3 — THE TRANSFORMATION ⚡</p>
+          <p class="shot-desc">SIGNATURE VFX SHOT. Energy surge erupts from spine outward. Armor plates materialize from light — gunmetal panels snapping to chest, shoulders, arms with magnetic force. Speed ramp: Impact. Physics engine: Max. Particles cascade. Camera rotates 90° around subject as armor assembles.</p>
+        </div>
+        <span class="shot-badge badge-max">PEAK — Signature</span>
+      </div>
+      <div class="shot highlight">
+        <p class="shot-time">00:05–00:06</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 4 — Assembly Cascade</p>
+          <p class="shot-desc">ECU: gauntlet snapping onto forearm. Fingers closing into a fist — knuckle plates locking one-by-one. Suit seam lines illuminate electric blue. Still on Impact ramp — aftermath of transformation.</p>
+        </div>
+        <span class="shot-badge badge-high">High Density</span>
+      </div>
+      <div class="shot">
+        <p class="shot-time">00:06–00:08</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 5 — Back of Helmet</p>
+          <p class="shot-desc">Medium: helmet descends from above and locks over your head in slow motion. Seams seal. Visor illuminates amber. Camera cranes low, looking up. Bullet Time begins.</p>
+        </div>
+        <span class="shot-badge badge-med">Medium</span>
+      </div>
+      <div class="shot highlight">
+        <p class="shot-time">00:08–00:09.5</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 6 — Hero Reveal 💥</p>
+          <p class="shot-desc">THE MONEY SHOT. Full armor. Camera orbits 180° around you in Bullet Time slow motion. Rain drops frozen mid-air. Anamorphic lens flares streak across chest plate. City lights bokeh behind. You are the warrior.</p>
+        </div>
+        <span class="shot-badge badge-max">PEAK — Hero</span>
+      </div>
+      <div class="shot">
+        <p class="shot-time">00:09.5–00:11</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 7 — Eyes of the Warrior</p>
+          <p class="shot-desc">ECU: visor opens or becomes translucent. Your eyes visible through the amber tinted glass. Eyes scan the horizon — calm, resolved, dangerous. Ramp Up. This is still you inside the armor.</p>
+        </div>
+        <span class="shot-badge badge-low">Low Density</span>
+      </div>
+      <div class="shot">
+        <p class="shot-time">00:11–00:12</p>
+        <div class="shot-content">
+          <p class="shot-name">SHOT 8 — Title Card</p>
+          <p class="shot-desc">Hard cut to pure black. Silence for one beat. Then: your title or name — white on black, centered, minimal, premium tracking. Film grain. Fade. Hold 1 second.</p>
+        </div>
+        <span class="shot-badge badge-low">Title</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── DENSITY MAP ──────────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="section-label">4-Section Format · Section 3</p>
+    <h2 class="section-title">Effects Density Map + Energy Arc</h2>
+    <p class="section-desc">Visual map of when VFX layers peak and how energy flows through the 12-second arc.</p>
+
+    <!-- Density Map -->
+    <div class="density-map reveal">
+      <p style="font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--grey-3);margin-bottom:8px;">Effects Density — 12 Second Arc</p>
+      <div class="density-track">
+        <div class="d-seg d-low"   style="flex:2;"   title="00:00–00:02 · Low">Low</div>
+        <div class="d-seg d-build" style="flex:0.5;" title="00:02–00:02.5 · Building">Build</div>
+        <div class="d-seg d-peak"  style="flex:2.5;" title="00:02.5–00:05 · PEAK">PEAK VFX</div>
+        <div class="d-seg d-max"   style="flex:1;"   title="00:05–00:06 · High">High</div>
+        <div class="d-seg d-build" style="flex:2;"   title="00:06–00:08 · Medium">Med</div>
+        <div class="d-seg d-peak"  style="flex:1.5;" title="00:08–00:09.5 · PEAK">HERO</div>
+        <div class="d-seg d-low"   style="flex:1.5;" title="00:09.5–00:11 · Low">Low</div>
+        <div class="d-seg d-hold"  style="flex:1;"   title="00:11–00:12 · Title">Title</div>
+      </div>
+      <div class="density-labels">
+        <span>0:00</span><span>0:02.5</span><span>0:05</span><span>0:07</span><span>0:09</span><span>0:12</span>
+      </div>
+    </div>
+
+    <!-- Energy Arc -->
+    <div class="arc-grid reveal" style="margin-top:24px;">
+      <div class="arc-phase arc-1">
+        <div class="arc-icon">🧍</div>
+        <p class="arc-name">The Human</p>
+        <p class="arc-time">00:00 – 00:02.5</p>
+      </div>
+      <div class="arc-phase arc-2">
+        <div class="arc-icon">⚡</div>
+        <p class="arc-name">The Transformation</p>
+        <p class="arc-time">00:02.5 – 00:06</p>
+      </div>
+      <div class="arc-phase arc-3">
+        <div class="arc-icon">🛡</div>
+        <p class="arc-name">The Warrior</p>
+        <p class="arc-time">00:06 – 00:09.5</p>
+      </div>
+      <div class="arc-phase arc-4">
+        <div class="arc-icon">👁</div>
+        <p class="arc-name">Identity</p>
+        <p class="arc-time">00:09.5 – 00:12</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── EFFECTS INVENTORY ──────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="section-label">4-Section Format · Section 2</p>
+    <h2 class="section-title">Master Effects Inventory</h2>
+    <p class="section-desc">All 12 distinct VFX layers used across the 12-second sequence.</p>
+
+    <div class="effects-grid reveal">
+      <div class="effect-item">
+        <span class="effect-dot dot-gold"></span>
+        <div>
+          <p class="effect-name">Energy Surge</p>
+          <p class="effect-desc">Spine-originating light burst expanding outward. Shot 3 activation trigger.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-gold"></span>
+        <div>
+          <p class="effect-name">Armor Assembly Physics</p>
+          <p class="effect-desc">Magnetic plate snap-to-body with CS3 Physics Engine. Momentum + collision.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-red"></span>
+        <div>
+          <p class="effect-name">Impact Speed Ramp</p>
+          <p class="effect-desc">Build → hit → slow aftermath. Applied to Shots 3 and 4.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-red"></span>
+        <div>
+          <p class="effect-name">Bullet Time Orbit</p>
+          <p class="effect-desc">180° camera revolution at ultra slow-motion. Shot 6 hero reveal.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-blue"></span>
+        <div>
+          <p class="effect-name">Particle Cascade</p>
+          <p class="effect-desc">Light fragments shed from armor assembly. Physics-driven scatter.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-blue"></span>
+        <div>
+          <p class="effect-name">Anamorphic Lens Flares</p>
+          <p class="effect-desc">Horizontal streaks from metallic chest plate + gauntlet edges.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-gold"></span>
+        <div>
+          <p class="effect-name">Frozen Rain Droplets</p>
+          <p class="effect-desc">Bullet Time suspends rain mid-air. Shot 6. Golden bokeh behind.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-white"></span>
+        <div>
+          <p class="effect-name">Lightning Atmosphere</p>
+          <p class="effect-desc">Background storm lighting the sky during the calm opening.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-blue"></span>
+        <div>
+          <p class="effect-name">Seam Illumination</p>
+          <p class="effect-desc">Suit join lines light electric blue as each plate locks. Shot 4.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-gold"></span>
+        <div>
+          <p class="effect-name">Visor Glow</p>
+          <p class="effect-desc">Amber interior visor illumination. Shot 5 (locks) + Shot 7 (eyes).</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-white"></span>
+        <div>
+          <p class="effect-name">City Bokeh</p>
+          <p class="effect-desc">f/2.0 background lights become soft orbs. Present in all outdoor shots.</p>
+        </div>
+      </div>
+      <div class="effect-item">
+        <span class="effect-dot dot-white"></span>
+        <div>
+          <p class="effect-name">Teal + Orange Grade</p>
+          <p class="effect-desc">Blockbuster color grade. Skin warm orange, shadows + BG cool teal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── PROMPTS ──────────────────────────── -->
+<section id="prompts">
+  <div class="wrap">
+    <p class="section-label">Step 4 · Copy-Paste Ready</p>
+    <h2 class="section-title">Production Prompts</h2>
+    <p class="section-desc">
+      Three prompts to copy directly into Cinema Studio 3.0.
+      Start Frame → End Frame → Main Video Prompt.
+    </p>
+
+    <!-- START FRAME -->
+    <h3 style="font-size:18px;font-weight:600;color:var(--white);margin-bottom:16px;margin-top:40px;">
+      Start Frame Prompt <span style="color:var(--grey-3);font-size:13px;font-weight:400;margin-left:8px;">→ Image tab in CS3</span>
+    </h3>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Start Frame · IMAGE TAB</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">A lone figure stands on a dark, rain-slicked urban rooftop at night. This is [YOUR NAME/SOUL ID CHARACTER] — fully human, no armor. Wearing dark tactical pants and a simple dark jacket. Back turned partially to camera, looking out over the city. Raindrops catching the city glow below. Storm clouds rolling in from the horizon. Hair moving slightly in the rising wind. Hands at sides, still. Expression: calm, resolute, aware of what is coming.
+
+Camera: ARRI Alexa 35. 35mm anamorphic lens. f/2.0. City lights behind create shallow golden bokeh orbs. Color temperature: cool blue-grey from storm light above, warm amber from city below. Strong cinematic contrast. Teal + orange color grade. Film grain active. This is a Marvel-scale production still.</div>
+    </div>
+
+    <!-- END FRAME -->
+    <h3 style="font-size:18px;font-weight:600;color:var(--white);margin-bottom:16px;margin-top:40px;">
+      End Frame Prompt <span style="color:var(--grey-3);font-size:13px;font-weight:400;margin-left:8px;">→ Image tab in CS3</span>
+    </h3>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">End Frame · IMAGE TAB</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">The same figure, now fully armored. Same rooftop, same storm. This is [YOUR NAME/SOUL ID CHARACTER] in gunmetal grey and midnight blue full tactical battle armor. Clean, hyper-real design — not fantasy, not robotic. Plated chest armor, armored shoulders with angular geometry, gauntlets with knuckle plates locked, armored boots. Helmet locked and sealed — amber-tinted visor glowing faintly from within. Suit seam lines illuminate electric blue.
+
+Standing tall, facing camera. Rain striking the armor surface, droplets catching the visor glow. Anamorphic lens flares streak horizontally across the chest plate. City lights golden bokeh behind. Camera: ARRI Alexa 35. 35mm anamorphic. Same location, same lens, same grade. This is the warrior that was always inside the human.</div>
+    </div>
+
+    <!-- MAIN VIDEO PROMPT -->
+    <h3 style="font-size:18px;font-weight:600;color:var(--white);margin-bottom:16px;margin-top:40px;">
+      Main Video Prompt <span style="color:var(--grey-3);font-size:13px;font-weight:400;margin-left:8px;">→ VIDEO tab in CS3</span>
+    </h3>
+    <div class="callout callout-blue reveal">
+      <span class="callout-icon">💡</span>
+      <p class="callout-text">
+        <strong>In CS3 VIDEO tab:</strong> Set Start Frame (from above), Set End Frame (from above), link Soul ID character, set Genre=Action, Speed Ramp=Impact, Physics=High. Then paste the prompt below.
+      </p>
+    </div>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Main Prompt · VIDEO TAB · Cinema Studio 3.0</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">Style & Mood: ARRI Alexa 35 cinematography. 35mm anamorphic lens. IMAX-scale cinematic energy. Teal + orange color grade. Heavy film grain. Dark, rain-soaked urban environment. Marvel-scale hyper-real live action — no fantasy, no CGI aesthetic. Every frame should feel like it cost $500M to shoot.
+
+Narrative Summary: A lone human figure on a rain-slicked rooftop transforms into a fully armored warrior as a storm breaks. The transformation is a physical, physics-driven event — armor materializes and assembles onto the body with magnetic force and kinetic energy.
+
+Dynamic Description:
+SHOT 1 [00:00–00:02] WIDE. Back of the figure against the city. Storm approaching. Rain beginning. Camera holds static. Wind moves hair. Speed: slow, atmospheric. Flash Out ramp engaging.
+
+SHOT 2 [00:02–00:02.5] ECU INSERT. Face. Lightning flash reflects in eyes. Jaw sets. Decision made. Camera locked.
+
+SHOT 3 [00:02.5–00:05] THE TRANSFORMATION. Energy surge erupts from the spine outward — bright white-blue light expanding in all directions. Armor plates materialize from concentrated light and snap onto the body: chest plate first, then shoulders, arms, legs — each plate connecting with a physical impact force. Camera rotates 90° around the subject as armor assembles. Particles cascade outward. Physics engine at maximum — every plate follows mass and momentum rules. Impact speed ramp engaged: builds → peaks → aftermath slows. This is the signature VFX moment.
+
+SHOT 4 [00:05–00:06] ECU. Gauntlet snapping onto forearm. Fingers closing — knuckle plates locking one by one. Suit seam lines illuminate electric blue as each connection seals. Still on Impact ramp aftermath.
+
+SHOT 5 [00:06–00:08] MEDIUM. Helmet descends from above in slow motion and locks onto the head. Seams seal. Visor activates — amber glow from within. Camera cranes low, looking up. Bullet Time ramp beginning.
+
+SHOT 6 [00:08–00:09.5] HERO REVEAL. Full armor. Bullet Time. Camera orbits 180° around the fully armored figure. Rain droplets suspended mid-air. Anamorphic lens flares streak horizontally across chest plate. City lights pure golden bokeh behind. This is the money shot. Every element of the armor reads clearly. The warrior stands alone against the storm.
+
+SHOT 7 [00:09.5–00:11] ECU. Visor becomes semi-translucent — eyes visible through amber tint. Eyes scan the horizon. Calm. Resolved. Dangerous. Ramp Up. This is still a human inside the armor.
+
+SHOT 8 [00:11–00:12] Hard cut to pure black. One beat of silence. Title card fades in — white minimal type on black, centered, premium letter-spacing. Film grain. Hold.
+
+Static Description: Urban rooftop at night. Brutalist concrete architecture, wet surfaces reflecting city lights below. Storm overhead — lightning illuminating cloud layers. City extending to horizon. Railing at edge. Rain falling throughout. The location is a fortress above the world.
+
+Audio: Epic hybrid trailer score — orchestral strings building to electronic percussion impact at 00:02.5. Armor assembly: metallic impact SFX, magnetic lock sounds, energy surge tone. Bullet Time: music drops to near-silence, only rain and ambient tone. Hero reveal: bass drop + full orchestra swell. Title card: silence, single resonant tone.</div>
+    </div>
+
+    <!-- MULTI-SHOT TIP -->
+    <div class="callout callout-gold reveal" style="margin-top:40px;">
+      <span class="callout-icon">🎬</span>
+      <p class="callout-text">
+        <strong>Multi-Shot Tip:</strong> For maximum control, break this into individual shots in CS3's Multi-Shot panel. Set Shot 3 and Shot 6 as separate generations with their own start frames. Chain Shot 3's end frame as Shot 4's start frame — this maintains visual continuity through the transformation sequence without drift.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<footer>
+  <div class="wrap">
+    <p>Action Trailer Production Guide &nbsp;·&nbsp; <span>Cinema Studio 3.0 + Seedance 2.0</span> &nbsp;·&nbsp; higgsfield.ai</p>
+    <p style="margin-top:8px;font-size:11px;">Saved to <span>claude-workspace/projects/ACTION-TRAILER/</span></p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Copy buttons
+  function copyPrompt(btn) {
+    const text = btn.closest('.prompt-box').querySelector('.prompt-body').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+      }, 2500);
+    });
+  }
+</script>
+</body>
+</html>

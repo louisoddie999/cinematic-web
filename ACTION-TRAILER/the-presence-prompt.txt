@@ -1,0 +1,220 @@
+==============================================================
+THE PRESENCE — 12-SECOND CINEMATIC SHOT
+Cinema Studio 3.0 · Seedance 2.0 · "Option A"
+==============================================================
+
+CONCEPT
+-------
+No VFX. No transformation. Pure cinema.
+A man standing still while the world moves.
+The camera draws closer. He acknowledges nothing.
+Then — one gesture. The shades come off. Eyes revealed.
+That is the entire film.
+
+CHARACTER DESCRIPTION (for @ref1 — character sheet)
+----------------------------------------------------
+Broad, powerfully built Black man. Deep ebony complexion — rich, even
+dark brown skin tone. Very wide shoulders, thick neck, stocky muscular
+frame. Broad facial structure: wide forehead, prominent high cheekbones,
+strong square jaw. Full thick black beard covering entire jaw and chin,
+dense mustache connecting. Short natural coil/afro-texture hair — tight
+curl pattern, low skin fade on sides, slightly fuller rounded top.
+Heavy-lidded dark brown eyes — calm, intense, unhurried.
+
+OUTFIT (for start frame generation)
+------------------------------------
+All-black premium fitted outfit. Black high-collar jacket or premium
+black coat — structured, sharp, minimal. No logos, no detail. The
+darkness of the clothing pushes all attention to the face and presence.
+Dark aviator-style sunglasses — matte black frames, dark lenses.
+The shades are on. Eyes hidden.
+
+ENVIRONMENT
+-----------
+High rooftop terrace at late golden hour — sky transitioning from
+amber below to deep blue-grey above. City stretching to horizon.
+Rain-slicked concrete surface reflecting warm city light.
+Wind is present — subtle movement in clothing. Nothing theatrical.
+The light: warm amber key from city glow below catching jaw and
+cheekbones from beneath, cool blue-grey fill from the overcast sky
+above. The intersection of both lights on deep ebony skin creates
+extraordinary dimensional contrast. This is the money lighting setup.
+
+==============================================================
+START FRAME PROMPT — IMAGE TAB in CS3
+==============================================================
+
+A powerfully built Black man stands alone on a high rain-slicked
+rooftop terrace at late golden hour. Deep ebony complexion. Broad
+face, strong jaw, full thick black beard. Short natural coil hair
+with low fade. Wearing a fitted all-black premium coat — structured,
+sharp, minimal. Dark matte aviator sunglasses on. Eyes completely
+hidden behind the lenses.
+
+He stands absolutely still. Not posed — present. Weight evenly
+distributed. Hands at sides. Expression unreadable behind the shades.
+The city stretches below and behind him. Sky transitioning from warm
+amber low to deep blue-grey above. Rain-slicked surface beneath.
+
+Camera: medium shot, slightly low angle — looking slightly up at him.
+This angle adds stature without theatrics. He fills the left 60% of
+the frame. City and sky in the right 40%.
+
+ARRI Alexa 35. 50mm anamorphic lens. f/1.8 — background city lights
+dissolve into warm amber bokeh orbs. Warm amber key light catching
+jaw and cheekbone from below-left. Cool blue-grey from above-right.
+Deep shadows in eye sockets behind the sunglasses. Extraordinary skin
+tone rendering on deep ebony complexion. Teal + orange color grade.
+Film grain. Cinematic. This man costs the camera nothing.
+
+==============================================================
+END FRAME PROMPT — IMAGE TAB in CS3
+==============================================================
+
+Same man. Same rooftop. Same moment — seconds later.
+
+The sunglasses are now held loosely in his right hand, lowered.
+His eyes are visible for the first time — dark brown, heavy-lidded,
+looking slightly off-camera toward the horizon. Calm. Certain.
+Fully present. Not performing. Just existing with total authority.
+
+Everything else is identical: same outfit, same environment, same
+camera position, same lighting. Only his eyes are now revealed.
+The amber city light now catches across the bridge of his nose and
+upper cheekbones. The eyes read clearly — deep, warm, dangerous
+in their stillness.
+
+Camera: same medium shot, slightly low angle. 50mm anamorphic.
+f/1.8. Same bokeh behind. Same grade. Same grain.
+This is the payoff frame. The entire 12 seconds have led here.
+
+==============================================================
+CINEMA STUDIO 3.0 SETTINGS
+==============================================================
+
+Model:              Seedance 2.0
+Genre:              Drama
+Duration:           12 seconds
+Resolution:         4K Native
+Speed Ramp Primary: Slow-mo (sustained — entire duration)
+Speed Ramp Peak:    Bullet Time (00:05–00:09 — shades removal moment)
+Camera Sensor:      ARRI Alexa 35
+Lens:               50mm Anamorphic
+Aperture:           f/1.8
+Color Grade:        Teal + Orange — warm amber skin, cool blue shadows
+Film Grain:         Active — heavy
+Physics Engine:     OFF (no armor, no particles needed)
+Character Ref:      @ref1 — character sheet (your 3 photos / Nano Banana output)
+Audio:              Drama orchestral — Hans Zimmer minimal. Single
+                    piano note building to low cello swell at the
+                    shades removal. Near silence through most of it.
+
+==============================================================
+MAIN VIDEO PROMPT — VIDEO TAB in CS3
+==============================================================
+
+Style & Mood: ARRI Alexa 35 cinematography. 50mm anamorphic lens.
+Teal + orange color grade — warm amber on deep ebony skin, cool
+blue-grey in shadows and sky. Heavy cinematic film grain. Drama
+genre. This is pure presence filmmaking — no VFX, no gimmicks.
+The camera is the only thing that moves. Christopher Nolan meets
+a character study. Every frame should feel like a $200M production
+still that says nothing and means everything.
+
+Narrative Summary: A man stands alone above the city — still,
+unreadable, complete. The world moves around him. He moves for
+nothing. Then he removes his sunglasses and the world finally
+sees who it has been dealing with.
+
+Dynamic Description:
+
+SHOT 1 [00:00–00:03] WIDE ESTABLISHING. @ref1 stands on the rain-slicked
+rooftop terrace. Medium shot, slightly low angle — city stretching
+behind and below. He is absolutely still. Wind moves clothing
+slightly. Rain-slicked surface beneath. Camera begins an
+imperceptible slow push-in — barely moving but always moving.
+Speed: Slow-mo. The world behind him is alive. He is not.
+He is the still point in a turning world.
+
+SHOT 2 [00:03–00:05] TIGHTER PUSH. Camera has closed ground — now a
+medium close-up. His broad face fills more of the frame.
+The dark aviator shades are fully visible — matte black, impenetrable.
+The amber city light catching across jaw and cheekbones below the
+lenses. The shadows where his eyes should be are completely black.
+The audience still cannot read him. Camera continues pushing.
+Slow-mo sustained.
+
+SHOT 3 [00:05–00:09] THE REMOVAL. Bullet Time engages.
+One hand rises — slow, deliberate, unhurried. No urgency.
+He is doing this on his schedule, not ours. The sunglasses
+are lifted from his face in extreme slow motion. The moment
+the lenses clear his eyes — Bullet Time at maximum.
+His dark brown eyes are revealed. Heavy-lidded. Calm. Looking
+slightly toward the horizon — not at the camera. As if whatever
+is out there is already handled. Amber light now catches across
+the bridge of his nose and upper cheeks. The eyes are extraordinary —
+deep, warm, and completely still. This is the climax.
+
+SHOT 4 [00:09–00:11] ECU — EYES ONLY. Extreme close-up.
+His eyes. The full weight of the shot lands here.
+No movement. Camera locked. Just the eyes and the world
+they are looking at. The grain of his skin visible.
+The warm light. The blue shadow. Hold.
+
+SHOT 5 [00:11–00:12] PULL BACK — WIDE. A single slow breath
+of camera — pulling back just slightly. Returning to wide.
+He is still there. Still still. The city still moving behind him.
+Nothing has changed. And yet everything has changed.
+Hard cut to black.
+
+Static Description: High urban rooftop terrace. Rain-slicked
+concrete. No railing visible — edge of the world. City lights
+extending to horizon below. Sky: amber near the horizon line,
+deep blue-grey overhead, transitioning through the frame.
+Subtle wind. No other people. The location is a throne.
+
+Audio: Single low piano note from 00:00. Barely audible.
+Cello enters at 00:05 as shades begin to move — single low
+sustained note, no melody. At 00:09 when eyes are revealed:
+near silence. Only ambient city sound far below. Wind.
+Rain on concrete. His breathing. Hold through to black.
+
+==============================================================
+REFERENCE SLOT MAP
+==============================================================
+
+@ref1 — Character sheet (Nano Banana output of your 3 photos)
+@ref2 — Environment reference (dark rooftop, amber city glow)
+@ref3 — Lighting reference (a cinematic portrait with warm low
+         key light on dark skin — look for a Denzel Washington
+         or Idris Elba production still for the exact lighting mood)
+
+==============================================================
+NANO BANANA CHARACTER PROMPT (updated for this concept)
+==============================================================
+
+Upload your 3 photos as face references, then use:
+
+Character reference sheet. Male. Deep ebony complexion — rich dark
+brown skin tone, even across face and body. Broad, powerful facial
+structure: wide forehead, prominent high cheekbones, strong square
+jawline, broad flat nose, full lips. Heavy-lidded dark brown eyes —
+calm, intense, slightly downward gaze. Short natural hair — tight
+coil/afro texture, low skin fade on both sides and back, slightly
+fuller rounded top. Full thick black beard: dense coverage across
+entire jaw and chin, defined mustache connecting to beard, beard
+tapers slightly at cheeks. Thick neck. Very broad shoulders —
+stocky, powerfully built upper body, wide chest.
+
+For this project: wearing fitted all-black premium coat, dark
+matte aviator sunglasses. Standing upright, weight neutral,
+expression unreadable — a man who has already won.
+
+OUTPUT: Three views on dark #111111 background. Front neutral.
+Front relaxed. 3/4 side profile. Consistent cinematic lighting —
+warm amber key from below-left, cool blue-grey fill from above.
+Photorealistic. Film grain. Not illustrated. Single wide PNG.
+
+==============================================================
+Saved: ACTION-TRAILER/the-presence-prompt.txt
+==============================================================

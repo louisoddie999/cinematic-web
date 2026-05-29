@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+id_rsa
+credentials*
+*secret*
+service-account*.json
+*token*.json
+
+# Build output
+dist/
+build/
+.next/
+out/
+*.log
+
+# Heavy media render output (keep repo light)
+out/*.mp4
+out/*.mov
+*.mp4
+*.mov
+renders/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Caches
+.cache/
+coverage/
+*.tmp

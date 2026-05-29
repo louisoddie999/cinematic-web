@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Presence — Cinema Studio 3.0 Production Guide</title>
+<style>
+  :root {
+    --bg:          #070707;
+    --surface:     #0e0e0e;
+    --card:        #121212;
+    --card-hover:  #181818;
+    --amber:       #D4923A;
+    --amber-dim:   rgba(212,146,58,0.12);
+    --amber-border:rgba(212,146,58,0.28);
+    --blue:        #4A7FA5;
+    --blue-dim:    rgba(74,127,165,0.12);
+    --blue-border: rgba(74,127,165,0.28);
+    --white:       #FFFFFF;
+    --grey-1:      #E2E2E2;
+    --grey-2:      #8A8A8A;
+    --grey-3:      #3A3A3A;
+    --border:      rgba(255,255,255,0.06);
+    --text-hero:   clamp(44px,7vw,96px);
+    --text-h2:     clamp(22px,3vw,38px);
+    --radius:      10px;
+    --radius-lg:   18px;
+    --section-y:   clamp(80px,10vw,130px);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    background:var(--bg);
+    color:var(--grey-1);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--amber-dim);color:var(--amber);}
+
+  /* GRAIN */
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events:none;z-index:0;opacity:0.5;
+  }
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(7,7,7,0.88);
+    backdrop-filter:blur(24px) saturate(160%);
+    -webkit-backdrop-filter:blur(24px) saturate(160%);
+    border-bottom:1px solid var(--border);
+    padding:0 clamp(24px,5vw,80px);
+    height:58px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-brand{font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);}
+  .nav-links{display:flex;gap:28px;list-style:none;}
+  .nav-links a{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--grey-2);text-decoration:none;transition:color 200ms;}
+  .nav-links a:hover{color:var(--white);}
+
+  /* LAYOUT */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(24px,5vw,80px);position:relative;z-index:1;}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:flex-end;
+    padding-bottom:clamp(60px,8vw,110px);
+    padding-top:120px;
+    position:relative;overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 70% 55% at 65% 25%, rgba(212,146,58,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 20% 75%, rgba(74,127,165,0.05) 0%, transparent 60%),
+      linear-gradient(180deg,#090909 0%,#070707 100%);
+    z-index:0;
+  }
+  .hero-eyebrow{
+    font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:20px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--amber);opacity:0.5;}
+  .hero-title{
+    font-size:var(--text-hero);font-weight:800;
+    letter-spacing:-0.035em;line-height:0.95;
+    color:var(--white);margin-bottom:28px;
+  }
+  .hero-title em{
+    font-style:normal;
+    background:linear-gradient(135deg,var(--amber) 0%,#F0C070 50%,var(--amber) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .hero-concept{
+    font-size:clamp(15px,1.4vw,19px);
+    color:var(--grey-2);max-width:520px;line-height:1.8;
+    margin-bottom:40px;font-style:italic;
+  }
+  .hero-concept strong{color:var(--grey-1);font-style:normal;}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    display:inline-flex;align-items:center;gap:5px;
+    padding:5px 13px;border-radius:100px;
+    font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:1px solid;
+  }
+  .tag-amber{color:var(--amber);border-color:var(--amber-border);background:var(--amber-dim);}
+  .tag-blue {color:#7BB8D4;border-color:var(--blue-border);background:var(--blue-dim);}
+  .tag-dim  {color:var(--grey-2);border-color:var(--border);background:rgba(255,255,255,0.03);}
+
+  /* SECTIONS */
+  section{padding:var(--section-y) 0;}
+  .section-label{
+    font-size:10px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--amber-border),transparent);max-width:100px;}
+  .section-title{font-size:var(--text-h2);font-weight:700;letter-spacing:-0.025em;color:var(--white);margin-bottom:14px;}
+  .section-desc{font-size:14px;color:var(--grey-2);max-width:580px;line-height:1.8;margin-bottom:44px;}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+
+  /* CARDS */
+  .glass{
+    background:rgba(255,255,255,0.025);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border:1px solid var(--border);border-radius:var(--radius-lg);padding:30px;
+    transition:background 240ms,border-color 240ms;
+  }
+  .glass:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);}
+
+  .step{
+    display:grid;grid-template-columns:64px 1fr;gap:20px;
+    padding:24px 28px;border-radius:var(--radius);
+    border:1px solid var(--border);background:var(--card);
+    transition:background 200ms,border-color 200ms;align-items:start;
+  }
+  .step:hover{background:var(--card-hover);border-color:rgba(255,255,255,0.09);}
+  .step-num{
+    width:44px;height:44px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:700;flex-shrink:0;
+  }
+  .sn-amber{background:var(--amber-dim);border:1px solid var(--amber-border);color:var(--amber);}
+  .sn-blue {background:var(--blue-dim); border:1px solid var(--blue-border); color:#7BB8D4;}
+  .step-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:7px;}
+  .step-body{font-size:13px;color:var(--grey-2);line-height:1.75;}
+  .step-body strong{color:var(--grey-1);}
+  .steps{display:flex;flex-direction:column;gap:2px;}
+
+  /* SETTINGS */
+  .settings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .sc{padding:22px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);transition:border-color 200ms;}
+  .sc:hover{border-color:var(--amber-border);}
+  .sc-label{font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey-3);margin-bottom:9px;}
+  .sc-value{font-size:17px;font-weight:600;color:var(--white);margin-bottom:5px;}
+  .sc-note{font-size:12px;color:var(--grey-2);line-height:1.6;}
+  .sc-value.amber{color:var(--amber);}
+  .sc-value.blue{color:#7BB8D4;}
+  .sc-value.off{color:#6A6A6A;text-decoration:line-through;}
+
+  /* TIMELINE */
+  .timeline{display:flex;flex-direction:column;gap:2px;}
+  .shot{
+    display:grid;grid-template-columns:90px 1fr 100px;gap:18px;
+    align-items:center;padding:16px 22px;
+    border-radius:var(--radius);border:1px solid var(--border);background:var(--card);
+    transition:background 200ms;
+  }
+  .shot:hover{background:var(--card-hover);}
+  .shot.peak{border-color:rgba(212,146,58,0.2);background:rgba(212,146,58,0.035);}
+  .shot-time{font-size:11px;font-weight:700;letter-spacing:0.06em;color:var(--amber);font-variant-numeric:tabular-nums;}
+  .shot-name{font-size:13px;font-weight:600;color:var(--white);margin-bottom:3px;}
+  .shot-desc{font-size:12px;color:var(--grey-2);line-height:1.5;}
+  .shot-badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:3px 9px;border-radius:100px;
+    font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+    white-space:nowrap;justify-self:end;
+  }
+  .b-still  {background:rgba(74,222,128,0.08); color:#4ADE80;border:1px solid rgba(74,222,128,0.2);}
+  .b-push   {background:rgba(212,146,58,0.1);  color:var(--amber);border:1px solid var(--amber-border);}
+  .b-climax {background:rgba(212,146,58,0.18); color:#F0C070;border:1px solid rgba(240,192,112,0.4);}
+  .b-hold   {background:rgba(74,127,165,0.1);  color:#7BB8D4;border:1px solid var(--blue-border);}
+
+  /* ARC */
+  .arc{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:24px;}
+  .arc-phase{
+    padding:18px 14px;border-radius:var(--radius);text-align:center;
+    position:relative;
+  }
+  .arc-phase::after{
+    content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+    color:var(--grey-3);font-size:13px;z-index:2;
+  }
+  .arc-phase:last-child::after{display:none;}
+  .ap-1{background:rgba(74,127,165,0.08);border:1px solid rgba(74,127,165,0.18);}
+  .ap-2{background:rgba(212,146,58,0.07);border:1px solid rgba(212,146,58,0.18);}
+  .ap-3{background:rgba(212,146,58,0.12);border:1px solid rgba(212,146,58,0.28);}
+  .ap-4{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);}
+  .arc-icon{font-size:22px;margin-bottom:7px;}
+  .arc-name{font-size:12px;font-weight:700;color:var(--white);margin-bottom:3px;}
+  .arc-time{font-size:10px;color:var(--grey-2);}
+
+  /* ENERGY BAR */
+  .energy-track{display:flex;height:40px;border-radius:8px;overflow:hidden;margin:20px 0 12px;gap:2px;}
+  .e-seg{display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border-radius:4px;}
+  .e-still {background:rgba(74,127,165,0.2); color:#7BB8D4;}
+  .e-build {background:rgba(212,146,58,0.2); color:var(--amber);}
+  .e-peak  {background:rgba(212,146,58,0.38);color:#F0C070;}
+  .e-hold  {background:rgba(255,255,255,0.08);color:var(--grey-2);}
+
+  /* PROMPT BOX */
+  .prompt-box{position:relative;background:#090909;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .prompt-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:11px 18px;border-bottom:1px solid var(--border);
+    background:rgba(255,255,255,0.02);
+  }
+  .prompt-lang{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey-3);}
+  .copy-btn{
+    display:inline-flex;align-items:center;gap:5px;
+    padding:4px 11px;border-radius:5px;border:1px solid var(--border);
+    background:transparent;color:var(--grey-2);
+    font-size:10px;font-weight:700;letter-spacing:0.05em;cursor:pointer;
+    transition:all 170ms;
+  }
+  .copy-btn:hover{background:var(--amber-dim);border-color:var(--amber-border);color:var(--amber);}
+  .copy-btn.copied{background:rgba(74,222,128,0.08);border-color:rgba(74,222,128,0.3);color:#4ADE80;}
+  .prompt-body{
+    padding:22px;font-family:'Menlo','Monaco','Consolas',monospace;
+    font-size:12px;line-height:1.85;color:#C0CCDE;
+    white-space:pre-wrap;word-break:break-word;
+    max-height:460px;overflow-y:auto;
+  }
+  .prompt-body::-webkit-scrollbar{width:3px;}
+  .prompt-body::-webkit-scrollbar-track{background:transparent;}
+  .prompt-body::-webkit-scrollbar-thumb{background:var(--grey-3);border-radius:2px;}
+
+  /* CALLOUT */
+  .callout{display:flex;gap:14px;padding:18px 22px;border-radius:var(--radius);margin-bottom:28px;}
+  .c-amber{background:var(--amber-dim);border-left:3px solid var(--amber);}
+  .c-blue {background:var(--blue-dim); border-left:3px solid var(--blue);}
+  .c-dim  {background:rgba(255,255,255,0.03);border-left:3px solid var(--grey-3);}
+  .callout-icon{font-size:17px;flex-shrink:0;margin-top:2px;}
+  .callout-text{font-size:13px;color:var(--grey-1);line-height:1.7;}
+  .callout-text strong{color:var(--white);}
+
+  /* REF GRID */
+  .ref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .ref-card{padding:22px;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--card);}
+  .ref-slot{font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+  .ref-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px;}
+  .ref-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+  .ref-list li{font-size:12px;color:var(--grey-2);display:flex;align-items:flex-start;gap:7px;}
+  .ref-list li::before{content:'·';color:var(--amber);font-size:16px;line-height:1;flex-shrink:0;margin-top:-2px;}
+
+  /* TWO COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+  /* LIGHTING DIAGRAM */
+  .light-diagram{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:32px;
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+  }
+  .ld-title{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey-3);}
+  .ld-visual{
+    width:100%;max-width:360px;height:220px;
+    position:relative;border-radius:var(--radius);
+    background:linear-gradient(160deg,#1A2530 0%,#0D1015 50%,#1A1208 100%);
+    overflow:hidden;
+  }
+  .ld-amber-ray{
+    position:absolute;bottom:-20px;left:-20px;
+    width:200px;height:200px;
+    background:radial-gradient(ellipse at bottom-left,rgba(212,146,58,0.5) 0%,transparent 70%);
+    transform:rotate(-20deg);
+  }
+  .ld-blue-ray{
+    position:absolute;top:-20px;right:-20px;
+    width:200px;height:200px;
+    background:radial-gradient(ellipse at top-right,rgba(74,127,165,0.4) 0%,transparent 70%);
+  }
+  .ld-subject{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:60px;height:100px;
+    background:linear-gradient(135deg,rgba(212,146,58,0.6) 0%,rgba(30,20,10,0.9) 60%,rgba(74,127,165,0.3) 100%);
+    border-radius:30px 30px 20px 20px;
+    box-shadow:0 0 30px rgba(212,146,58,0.15);
+  }
+  .ld-label-amber{position:absolute;bottom:16px;left:16px;font-size:10px;color:var(--amber);font-weight:600;letter-spacing:0.06em;}
+  .ld-label-blue{position:absolute;top:16px;right:16px;font-size:10px;color:#7BB8D4;font-weight:600;letter-spacing:0.06em;}
+  .ld-desc{font-size:12px;color:var(--grey-2);text-align:center;max-width:320px;line-height:1.7;}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:11px 14px;text-align:left;font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--grey-3);border-bottom:1px solid var(--border);}
+  tbody td{padding:13px 14px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;color:var(--grey-2);line-height:1.5;}
+  tbody td:first-child{color:var(--white);font-weight:600;}
+  tbody tr:hover td{background:rgba(255,255,255,0.02);}
+
+  /* FOOTER */
+  footer{padding:56px 0;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--grey-3);letter-spacing:0.07em;position:relative;z-index:1;}
+  footer span{color:var(--amber);}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:768px){
+    .ref-grid,.two-col,.arc{grid-template-columns:1fr;}
+    .shot{grid-template-columns:80px 1fr;}.shot-badge{display:none;}
+    .nav-links{display:none;}
+    .arc-phase::after{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">The Presence — Production Guide</span>
+  <ul class="nav-links">
+    <li><a href="#concept">Concept</a></li>
+    <li><a href="#character">Character</a></li>
+    <li><a href="#startframe">Start Frame</a></li>
+    <li><a href="#settings">CS3 Settings</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#prompts">Prompts</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap" style="position:relative;z-index:1;">
+    <p class="hero-eyebrow">Cinema Studio 3.0 · Seedance 2.0 · Option A</p>
+    <h1 class="hero-title">The<br><em>Presence</em></h1>
+    <p class="hero-concept">
+      No VFX. No transformation. <strong>Pure cinema.</strong><br>
+      A man standing still while the world moves.<br>
+      The camera draws closer. He acknowledges nothing.<br>
+      Then — the shades come off. Eyes revealed. That is the entire film.
+    </p>
+    <div class="tags">
+      <span class="tag tag-amber">12-Second Shot</span>
+      <span class="tag tag-amber">Drama Genre</span>
+      <span class="tag tag-blue">No VFX · Pure Light</span>
+      <span class="tag tag-dim">Seedance 2.0 · 4K Native</span>
+      <span class="tag tag-dim">Bullet Time · Shades Removal</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONCEPT -->
+<section id="concept">
+  <div class="wrap">
+    <p class="section-label">The Philosophy</p>
+    <h2 class="section-title">What Makes This Cinematic</h2>
+    <p class="section-desc">Understanding the grammar of the shot before generating a single frame.</p>
+
+    <div class="two-col reveal">
+      <div class="glass">
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;">The Core Rule</p>
+        <p style="font-size:15px;color:var(--white);font-weight:600;margin-bottom:12px;line-height:1.5;">The subject costs the camera nothing.</p>
+        <p style="font-size:13px;color:var(--grey-2);line-height:1.8;">He doesn't move toward the camera. He doesn't perform for it. The camera moves toward him — slowly, almost reluctantly. Like it has no choice. Think Denzel holding a room still by existing in it. Think every Nolan shot where a character just stands and the audience feels something without a word spoken.</p>
+      </div>
+      <div class="glass">
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">The Action</p>
+        <p style="font-size:15px;color:var(--white);font-weight:600;margin-bottom:12px;line-height:1.5;">Action means change — not movement.</p>
+        <p style="font-size:13px;color:var(--grey-2);line-height:1.8;">At the start: hidden, guarded, unreadable. At the end: revealed, present, known. That transformation from hidden to seen is more dramatic than any explosion — because it is personal. The shades coming off is the entire narrative arc. One gesture. That is the climax.</p>
+      </div>
+    </div>
+
+    <!-- Lighting Diagram -->
+    <h3 style="font-size:20px;font-weight:700;color:var(--white);margin:52px 0 24px;letter-spacing:-0.02em;">The Lighting Setup</h3>
+    <div class="light-diagram reveal">
+      <p class="ld-title">Amber Below · Blue-Grey Above · Deep Ebony Skin</p>
+      <div class="ld-visual">
+        <div class="ld-amber-ray"></div>
+        <div class="ld-blue-ray"></div>
+        <div class="ld-subject"></div>
+        <span class="ld-label-amber">↑ Warm Amber · City Glow</span>
+        <span class="ld-label-blue">Cool Blue-Grey ↓ Storm Sky</span>
+      </div>
+      <p class="ld-desc">
+        Warm amber key light rising from city below catches jaw and cheekbones.
+        Cool blue-grey fill descending from overcast sky above.
+        The intersection of both on deep ebony skin creates extraordinary dimensional contrast —
+        this is the most cinematic lighting setup possible for this complexion.
+        This is why the rooftop setting was chosen. The environment IS the lighting rig.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CHARACTER -->
+<section id="character">
+  <div class="wrap">
+    <p class="section-label">Step 0 · Before Any Generation</p>
+    <h2 class="section-title">Character Setup</h2>
+    <p class="section-desc">Build your character reference before touching Cinema Studio. This locks your face, build, and outfit into every shot.</p>
+
+    <div class="callout c-amber reveal">
+      <span class="callout-icon">⚡</span>
+      <p class="callout-text"><strong>Do this first.</strong> Without a locked character reference, every shot generates a different face. @ref1 is your identity anchor for the entire 12 seconds.</p>
+    </div>
+
+    <div class="two-col reveal" style="margin-bottom:32px;">
+      <div class="sc">
+        <p class="sc-label">Character Reference Method</p>
+        <p class="sc-value amber">Nano Banana Pro</p>
+        <p class="sc-note">Upload your 3 photos as face references. Use the prompt below. Output = single wide character sheet PNG. Upload to CS3 as @ref1.</p>
+      </div>
+      <div class="sc">
+        <p class="sc-label">Character Slot</p>
+        <p class="sc-value">@ref1 — Face + Build</p>
+        <p class="sc-note">Your character sheet covers face AND body. CS3 reads both — your broad shoulders and frame inform the silhouette in every shot.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px;font-weight:600;color:var(--white);margin-bottom:14px;">Nano Banana Character Prompt</h3>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Nano Banana Pro · Character Prompt</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">Character reference sheet. Male. Deep ebony complexion — rich dark brown skin
+tone, even across face and body. Broad, powerful facial structure: wide forehead,
+prominent high cheekbones, strong square jawline, broad flat nose, full lips.
+Heavy-lidded dark brown eyes — calm, intense, slightly downward gaze. Short
+natural hair — tight coil/afro texture, low skin fade on both sides and back,
+slightly fuller rounded top. Full thick black beard: dense coverage across entire
+jaw and chin, defined mustache connecting to beard, beard tapers slightly at cheeks.
+Thick neck. Very broad shoulders — stocky, powerfully built upper body, wide chest.
+
+For this project: wearing fitted all-black premium coat — structured, sharp,
+minimal. Dark matte aviator sunglasses. Standing upright, weight neutral,
+expression unreadable — a man who has already won.
+
+OUTPUT: Three views on dark #111111 background. Panel 1: front neutral with
+sunglasses on. Panel 2: front relaxed with sunglasses on. Panel 3: 3/4 side
+profile looking right. Consistent cinematic lighting — warm amber key from
+below-left, cool blue-grey fill from above-right. Photorealistic. Film grain.
+Not illustrated. Single wide PNG, high resolution.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- START FRAME IMG2IMG -->
+<section id="startframe">
+  <div class="wrap">
+    <p class="section-label">Step 0B · Before Cinema Studio</p>
+    <h2 class="section-title">Start Frame Creation</h2>
+    <p class="section-desc">Your face must be the start frame. Never text-generate it. Upload your photo — let the AI add the outfit and world around you.</p>
+
+    <div class="callout c-amber reveal">
+      <span class="callout-icon">⚡</span>
+      <p class="callout-text"><strong>The rule:</strong> If you text-generate the start frame, the AI imagines a face matching your description — not YOUR face. Upload your actual photo and transform only the outfit and environment. Face stays yours. This is how you get $20M quality with your actual face in it.</p>
+    </div>
+
+    <!-- WORKFLOW DECISION -->
+    <h3 style="font-size:20px;font-weight:700;color:var(--white);margin:44px 0 20px;letter-spacing:-0.02em;">Which Tool to Use</h3>
+    <div class="steps reveal" style="margin-bottom:44px;">
+      <div class="step">
+        <div class="step-num sn-amber">1</div>
+        <div>
+          <p class="step-title">Kling AI img2img — Start Here</p>
+          <p class="step-body">Upload your front-facing photo. Set <strong>Creativity: 0.3</strong>. Kling transforms the outfit and background while locking your face hardest. Best first pass. If face drifts: drop to 0.2. If environment is too weak: raise to 0.4.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num sn-amber">2</div>
+        <div>
+          <p class="step-title">Nano Banana Pro — Highest Cinematic Quality</p>
+          <p class="step-body">Upload your photo as <strong>@ref1</strong>. $500M budget. 16:9 or 21:9. If your Kling output is strong, run it through Nano Banana as @ref1 to push the cinematic quality further — Nano Banana renders the anamorphic lens and teal+orange grade at a higher fidelity tier.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num sn-blue">3</div>
+        <div>
+          <p class="step-title">CS3 Seedance img2img — Native Workflow</p>
+          <p class="step-body">If you want to stay inside Cinema Studio. Upload photo as source in the IMAGE tab. Denoise at <strong>0.35</strong>. Good face lock, and your start frame goes directly into the Video tab slot without switching tools.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num sn-blue">4</div>
+        <div>
+          <p class="step-title">Lock It — Drop Into CS3 Video Tab</p>
+          <p class="step-body">Once you have the transformed photo, drag it into the <strong>Start Frame slot</strong> in the CS3 Video tab. Your face is now locked from frame 1. The AI animates the scene outward from your real face, not an invented one.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMPT 1: KLING -->
+    <h3 style="font-size:17px;font-weight:600;color:var(--white);margin-bottom:6px;">
+      Prompt 1 — Kling AI img2img
+      <span style="color:var(--grey-3);font-size:12px;font-weight:400;margin-left:8px;">Best Face Lock · Start Here</span>
+    </h3>
+    <div class="callout c-dim reveal" style="margin-bottom:14px;">
+      <span class="callout-icon" style="font-size:13px;">→</span>
+      <p class="callout-text" style="font-size:12px;"><strong>Tool:</strong> kling.kuaishou.com — Image tab — img2img &nbsp;|&nbsp; <strong>Input:</strong> Upload your front-facing photo &nbsp;|&nbsp; <strong>Creativity:</strong> 0.3 &nbsp;|&nbsp; <strong>Ratio:</strong> 16:9</p>
+    </div>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Kling AI · img2img · Creativity 0.3</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">Keep this man's face EXACTLY as it is. Same skin tone. Same jaw. Same beard.
+Same nose. Same eyes. Do not alter anything above the neck.
+
+Transform only:
+
+OUTFIT — Fitted all-black structured premium coat. Heavy fabric. Sharp
+shoulder seams. High collar. Zero logos, zero detail. Dark matte aviator
+sunglasses — thick matte black frames, completely opaque dark lenses.
+Hands loose at sides.
+
+BACKGROUND — Remove current background. Replace with high urban rooftop
+terrace at late golden hour. Rain-slicked dark concrete beneath him.
+The city sprawls below to every horizon. City lights dissolve into warm
+amber bokeh orbs in the deep background. Sky: amber near horizon,
+transitioning to deep blue-grey overcast overhead. No railing visible.
+He is at the edge of the world.
+
+LIGHTING — Warm amber key light rising from below-left, catching jaw
+and cheekbone from underneath at 35 degrees below horizon. Cool blue-grey
+fill from above-right. Deep shadows in the eye sockets behind the lenses —
+completely black, no reflections in the glass.
+
+FRAMING — Medium shot, slightly low angle looking up 5–8 degrees. He fills
+the left 60% of frame. City and sky fill the right 40%.
+
+LENS — 50mm anamorphic feel. f/1.8 shallow depth of field. Everything behind
+him fully dissolved into warm amber bokeh. Only he is sharp.
+
+COLOR — Teal shadows. Warm amber midtones on skin. Crushed deep blacks.
+Controlled highlights. Heavy analog film grain. Cinematic. Photorealistic.
+This is a $20M production still. This man costs the camera nothing.</div>
+    </div>
+
+    <!-- PROMPT 2: NANO BANANA -->
+    <h3 style="font-size:17px;font-weight:600;color:var(--white);margin:36px 0 6px;">
+      Prompt 2 — Nano Banana Pro
+      <span style="color:var(--grey-3);font-size:12px;font-weight:400;margin-left:8px;">Highest Cinematic Quality</span>
+    </h3>
+    <div class="callout c-dim reveal" style="margin-bottom:14px;">
+      <span class="callout-icon" style="font-size:13px;">→</span>
+      <p class="callout-text" style="font-size:12px;"><strong>Tool:</strong> Higgsfield — Nano Banana Pro &nbsp;|&nbsp; <strong>Upload:</strong> Your front-facing photo as @ref1 &nbsp;|&nbsp; <strong>Budget:</strong> $500M &nbsp;|&nbsp; <strong>Ratio:</strong> 16:9 (or 21:9 for ultra-wide)</p>
+    </div>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Nano Banana Pro · $500M Budget · 4K</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">@ref1 — same man, same face, same structure. Do not alter the face.
+
+Outfit transformation: He now wears a fitted all-black structured premium coat —
+heavy weight fabric, sharp shoulder seams, high collar, zero logos. Dark matte
+aviator sunglasses — thick matte black frames, opaque dark lenses. Eyes completely
+hidden. Nothing visible behind the lenses.
+
+Environment: High rooftop terrace, 40 floors above the city. Rain-slicked dark
+concrete underfoot, wet surface catching warm amber city light in long horizontal
+reflections. The city sprawls below to every horizon — thousands of warm orange
+bokeh points from buildings and traffic, dissolving soft behind him. The sky above:
+deep blue-grey overcast, pressing down. Golden-hour amber line along the distant
+skyline, transitioning upward through smoked blue to near-black overhead.
+No railing visible — he is at the edge of the world.
+
+He stands absolutely still. Not posed. Present. Weight even on both feet.
+Hands at sides. Head level. His face unreadable behind the shades. He fills
+the LEFT 60% of the frame. The right 40% is open city and sky.
+
+Framing: Medium shot. Camera positioned slightly LOW — looking up at him 5–8
+degrees. Sky above. City behind.
+
+Lens: ARRI Alexa 35. 50mm anamorphic. f/1.8. City lights behind him dissolve
+into warm amber bokeh orbs, soft and luminous. Nothing behind him is sharp.
+Only HIM is sharp.
+
+Lighting:
+PRIMARY KEY — warm amber, source: city glow rising from below-left. Strikes jaw
+from underneath-left at approximately 35 degrees below horizon. Catches the hard
+plane of cheekbone. Creates rich amber warmth on deep dark skin. The underside
+of the jaw catches most of it.
+FILL — cool blue-grey, source: overcast sky above-right. Soft wash across right
+side of face and shoulder. No hard edge. Cool grey that defines separation.
+SHADOW — eye sockets behind the sunglasses: completely black. Zero reflections.
+The darkness where his eyes should be is total. This is intentional.
+
+Color grade: Teal + orange. Shadows lean blue-teal. Midtones warm amber on skin.
+Blacks crushed deep. Highlights never blown. Heavy analog film grain.
+Photorealistic. Cinematic. This is a production still from a $200M film.</div>
+    </div>
+
+    <!-- PROMPT 3: CS3 IMG2IMG -->
+    <h3 style="font-size:17px;font-weight:600;color:var(--white);margin:36px 0 6px;">
+      Prompt 3 — CS3 / Seedance img2img
+      <span style="color:var(--grey-3);font-size:12px;font-weight:400;margin-left:8px;">Native Workflow · Stay in CS3</span>
+    </h3>
+    <div class="callout c-dim reveal" style="margin-bottom:14px;">
+      <span class="callout-icon" style="font-size:13px;">→</span>
+      <p class="callout-text" style="font-size:12px;"><strong>Tool:</strong> Cinema Studio 3.0 — IMAGE tab — img2img mode &nbsp;|&nbsp; <strong>Input:</strong> Upload front-facing photo as source &nbsp;|&nbsp; <strong>Denoise:</strong> 0.35 &nbsp;|&nbsp; <strong>Model:</strong> Seedance 2.0 &nbsp;|&nbsp; <strong>Resolution:</strong> 4K · 16:9</p>
+    </div>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">CS3 · Seedance 2.0 · img2img · Denoise 0.35</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">Source image provides the face — do not regenerate or alter it.
+Preserve: skin tone, facial structure, beard, all facial features above the neck.
+
+Apply transformation:
+
+COSTUME: All-black structured premium coat. Heavy tailored fabric, sharp shoulder
+seam, minimal — no detail, no logos. Dark matte aviator sunglasses on. Opaque
+lenses. Eyes fully hidden.
+
+ENVIRONMENT: High rooftop terrace. Rain-slicked dark concrete surface. City
+sprawling below and behind to the horizon. Thousands of warm amber city light
+points dissolving into bokeh behind him. Sky: amber low, transitioning to deep
+overcast blue-grey above. No railing.
+
+LIGHTING: City glow amber key from below-left — catches jaw, cheekbone, lower
+face. Cool blue-grey sky fill from above-right. Eye sockets: completely black
+behind the sunglasses. No lens reflections.
+
+FRAMING: Medium shot. Camera 5–8 degrees below subject eye level, looking
+slightly up. Subject fills left 60% of frame. Right 40% = city and sky.
+
+LENS: 50mm anamorphic. f/1.8. Background city lights fully dissolved to warm
+amber bokeh orbs. Subject tack sharp.
+
+COLOR: Teal in shadows. Warm orange/amber on lit skin. Crushed blacks.
+Controlled highlights. ARRI Alexa 35 simulation. Heavy film grain.
+Teal + orange grade.
+
+This single frame must communicate — before any motion begins — that the
+audience is watching someone who does not lose.</div>
+    </div>
+
+    <!-- $20M BREAKDOWN -->
+    <h3 style="font-size:20px;font-weight:700;color:var(--white);margin:52px 0 20px;letter-spacing:-0.02em;">What Makes It $20M</h3>
+    <div class="settings-grid reveal">
+      <div class="sc">
+        <p class="sc-label">Lighting Math</p>
+        <p class="sc-value amber">Below-Left Key</p>
+        <p class="sc-note">Amber key rising from city glow beneath — it hits the jaw from underneath. That inversion of typical portrait lighting is what reads as cinematic authority, not the light itself.</p>
+      </div>
+      <div class="sc">
+        <p class="sc-label">Bokeh Science</p>
+        <p class="sc-value">f/1.8 · Anamorphic</p>
+        <p class="sc-note">City lights behind him dissolve to specific warm orbs — not generic blur. Anamorphic horizontal bokeh streaks add width and depth the audience reads as premium without knowing why.</p>
+      </div>
+      <div class="sc">
+        <p class="sc-label">Atmospheric Depth</p>
+        <p class="sc-value amber">Wet Concrete</p>
+        <p class="sc-note">The rain-slicked surface adds horizontal amber reflections in the foreground. Extra planes of interest at zero cost. They tell the audience a story: it rained, he was already there, he didn't move.</p>
+      </div>
+      <div class="sc">
+        <p class="sc-label">Compositional Authority</p>
+        <p class="sc-value">Left 60 / Right 40</p>
+        <p class="sc-note">He doesn't center the frame. The city has room to breathe behind him on the right. The slight upward angle adds stature. These are choices, not accidents — and the eye reads them as expensive.</p>
+      </div>
+      <div class="sc">
+        <p class="sc-label">Color Science</p>
+        <p class="sc-value amber">Teal + Orange</p>
+        <p class="sc-note">Complementary colors on opposite ends of the spectrum. They vibrate against each other. That vibration reads as cinematic even at thumbnail size. Warm skin against cool shadow = dimensional separation.</p>
+      </div>
+      <div class="sc">
+        <p class="sc-label">The Sunglasses</p>
+        <p class="sc-value">Eyes Hidden</p>
+        <p class="sc-note">Eyes completely hidden behind opaque matte lenses means the audience cannot read him. Mystery creates authority. The start frame must earn the payoff of the reveal. If they can already see his eyes, the film is already over.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SETTINGS -->
+<section id="settings">
+  <div class="wrap">
+    <p class="section-label">Step 1 · Cinema Studio 3.0 Configuration</p>
+    <h2 class="section-title">Panel Settings</h2>
+    <p class="section-desc">Every dial set for pure cinematic presence. Drama over Action. Light over effects.</p>
+
+    <div class="settings-grid reveal">
+      <div class="sc"><p class="sc-label">Model</p><p class="sc-value amber">Seedance 2.0</p><p class="sc-note">Do not use Seedance 1.0. 2.0 has superior motion stability — essential for the slow camera push-in holding on a still subject.</p></div>
+      <div class="sc"><p class="sc-label">Genre</p><p class="sc-value">Drama</p><p class="sc-note">NOT Action. Drama genre: cinematic character framing, controlled motion, rich tonal lighting, emotional weight. Action adds VFX artifacts we don't want.</p></div>
+      <div class="sc"><p class="sc-label">Duration</p><p class="sc-value amber">12 Seconds</p><p class="sc-note">Full arc: stillness → push-in → shades removal → eyes → black.</p></div>
+      <div class="sc"><p class="sc-label">Resolution</p><p class="sc-value">4K Native</p><p class="sc-note">The ECU eye close-up demands 4K. At lower resolution the skin texture and eye detail lose impact.</p></div>
+      <div class="sc"><p class="sc-label">Speed Ramp — Base</p><p class="sc-value">Slow-mo</p><p class="sc-note">Sustained throughout the entire shot. Everything moves slower than real life — creates the feeling of weight and importance.</p></div>
+      <div class="sc"><p class="sc-label">Speed Ramp — Peak</p><p class="sc-value amber">Bullet Time</p><p class="sc-note">Engages at 00:05 for the shades removal. Ultra slow-motion on the single gesture that is the climax of the entire piece.</p></div>
+      <div class="sc"><p class="sc-label">Camera Sensor</p><p class="sc-value">ARRI Alexa 35</p><p class="sc-note">Organic color science, natural grain, beautiful skin tone rendering on dark complexions. This is what Nolan and Denis Villeneuve shoot on.</p></div>
+      <div class="sc"><p class="sc-label">Lens</p><p class="sc-value">50mm Anamorphic</p><p class="sc-note">Slightly tighter than the armored warrior version. 50mm is the "human eye" focal length — intimate without distortion. Anamorphic gives horizontal bokeh streaks behind.</p></div>
+      <div class="sc"><p class="sc-label">Aperture</p><p class="sc-value">f/1.8</p><p class="sc-note">Shallowest possible. City lights behind dissolve into warm amber orbs. Subject is the only sharp thing in the frame.</p></div>
+      <div class="sc"><p class="sc-label">Color Grade</p><p class="sc-value amber">Teal + Orange</p><p class="sc-note">Warm amber on skin, cool blue in shadows and sky. Classic blockbuster grade but especially powerful on deep ebony complexion with this lighting setup.</p></div>
+      <div class="sc"><p class="sc-label">Film Grain</p><p class="sc-value">Heavy — Active</p><p class="sc-note">This is not a clean digital shot. The grain is part of the cinematic texture. Heavy grain = weight and authenticity.</p></div>
+      <div class="sc"><p class="sc-label">Physics Engine</p><p class="sc-value off">OFF</p><p class="sc-note">No armor, no particles. Physics engine not needed. Keep it clean.</p></div>
+      <div class="sc"><p class="sc-label">Camera Movement</p><p class="sc-value amber">Dolly</p><p class="sc-note">Smooth forward push-in throughout. Not Handheld — that adds shake and kills the stillness. Not Static — the imperceptible push is the only movement in the frame.</p></div>
+      <div class="sc"><p class="sc-label">Emotion</p><p class="sc-value">Sadness</p><p class="sc-note">Counter-intuitive but correct. Sadness gives the face weight and heaviness — that heavy-lidded, still, present quality. Joy makes him expressive. Fear makes him tense. This man is neither.</p></div>
+      <div class="sc"><p class="sc-label">Shot Mode</p><p class="sc-value amber">Single Shot</p><p class="sc-note">NOT Multi-Shot Auto. You need frame-perfect control over the exact moment of the removal. Multi-Shot Auto cuts when it decides. You decide.</p></div>
+    </div>
+
+    <!-- Audio -->
+    <h3 style="font-size:20px;font-weight:700;color:var(--white);margin:48px 0 20px;letter-spacing:-0.02em;">Audio Guide</h3>
+    <div class="callout c-blue reveal">
+      <span class="callout-icon">🎵</span>
+      <p class="callout-text"><strong>Music-first workflow recommended.</strong> Generate or source the audio first. Upload to CS3 Audio Slot 1. Let the visuals time themselves to the silence and the cello swell. The near-silence at the eye reveal is as important as any image.</p>
+    </div>
+    <div class="glass reveal" style="padding:0;overflow:hidden;">
+      <table>
+        <thead><tr><th>Moment</th><th>Audio</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>00:00–00:05</td><td>Single low piano note. Barely audible. No melody.</td><td>Unresolved tension. Something is coming but we don't know what.</td></tr>
+          <tr><td>00:05–00:09</td><td>Low cello enters — one sustained note rising imperceptibly.</td><td>The build. The hand rises. Something is about to change.</td></tr>
+          <tr><td>00:09–00:11</td><td>Near silence. Only ambient city sound far below. Wind. Rain.</td><td>The reveal needs no score. The silence IS the impact.</td></tr>
+          <tr><td>00:11–00:12</td><td>Single deep resonant tone. Then nothing. Cut to black.</td><td>The full stop. The period at the end of the sentence.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="wrap">
+    <p class="section-label">Step 2 · Shot Architecture</p>
+    <h2 class="section-title">5-Shot Timeline</h2>
+    <p class="section-desc">12 seconds. 5 shots. One gesture. The camera does all the work.</p>
+
+    <div class="timeline reveal">
+      <div class="shot">
+        <p class="shot-time">00:00–00:03</p>
+        <div>
+          <p class="shot-name">SHOT 1 — The World Moves. He Doesn't.</p>
+          <p class="shot-desc">Wide establishing. Medium shot, slightly low angle. He stands on the rain-slicked rooftop. City alive behind him. Wind in clothing. Camera begins its imperceptible push-in. Slow-mo. Shades on. Unreadable.</p>
+        </div>
+        <span class="shot-badge b-still">Still</span>
+      </div>
+      <div class="shot">
+        <p class="shot-time">00:03–00:05</p>
+        <div>
+          <p class="shot-name">SHOT 2 — The Push</p>
+          <p class="shot-desc">Camera has closed ground — now medium close-up. His broad face fills the frame. The dark aviator shades fully visible. Amber light catching jaw and cheekbones below the lenses. The eye sockets: completely dark. Still unreadable. Camera keeps pushing. Slow-mo sustained.</p>
+        </div>
+        <span class="shot-badge b-push">Push</span>
+      </div>
+      <div class="shot peak">
+        <p class="shot-time">00:05–00:09</p>
+        <div>
+          <p class="shot-name">SHOT 3 — THE REMOVAL ✦</p>
+          <p class="shot-desc">CLIMAX. Bullet Time engages. One hand rises — slow, deliberate, unhurried. No urgency. The sunglasses lift from his face in extreme slow motion. The moment lenses clear his eyes — maximum Bullet Time. Dark brown eyes revealed. Heavy-lidded. Calm. Looking toward the horizon. Amber light catches across the bridge of his nose. The eyes are deep, warm, and completely still.</p>
+        </div>
+        <span class="shot-badge b-climax">Climax</span>
+      </div>
+      <div class="shot peak">
+        <p class="shot-time">00:09–00:11</p>
+        <div>
+          <p class="shot-name">SHOT 4 — ECU · Eyes Only</p>
+          <p class="shot-desc">Extreme close-up. His eyes fill the frame. No movement. Camera locked. The full weight of 9 seconds lands here. Grain of his skin visible. Warm amber light. Cool shadow. The eyes are looking at something the audience can't see — and that thing is already handled. Hold.</p>
+        </div>
+        <span class="shot-badge b-climax">ECU</span>
+      </div>
+      <div class="shot">
+        <p class="shot-time">00:11–00:12</p>
+        <div>
+          <p class="shot-name">SHOT 5 — Black</p>
+          <p class="shot-desc">Hard cut to pure black. One beat of silence. Then: title or name — white, centered, minimal, premium letter-spacing. Or nothing. Just black. Film grain. Fade.</p>
+        </div>
+        <span class="shot-badge b-hold">Title</span>
+      </div>
+    </div>
+
+    <!-- Energy Arc -->
+    <h3 style="font-size:20px;font-weight:700;color:var(--white);margin:48px 0 8px;letter-spacing:-0.02em;">Energy Arc</h3>
+    <p style="font-size:13px;color:var(--grey-2);margin-bottom:0;">The emotional arc of the 12 seconds.</p>
+    <div class="energy-track reveal">
+      <div class="e-seg e-still" style="flex:3;">Still</div>
+      <div class="e-seg e-build" style="flex:2;">Build</div>
+      <div class="e-seg e-peak"  style="flex:4;">Climax</div>
+      <div class="e-seg e-hold"  style="flex:3;">Hold</div>
+    </div>
+    <div class="arc reveal">
+      <div class="arc-phase ap-1"><div class="arc-icon">🕶</div><p class="arc-name">Hidden</p><p class="arc-time">00:00–00:05</p></div>
+      <div class="arc-phase ap-2"><div class="arc-icon">✋</div><p class="arc-name">The Gesture</p><p class="arc-time">00:05–00:07</p></div>
+      <div class="arc-phase ap-3"><div class="arc-icon">👁</div><p class="arc-name">Revealed</p><p class="arc-time">00:07–00:11</p></div>
+      <div class="arc-phase ap-4"><div class="arc-icon">⬛</div><p class="arc-name">Known</p><p class="arc-time">00:11–00:12</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROMPTS -->
+<section id="prompts">
+  <div class="wrap">
+    <p class="section-label">Step 3 · Copy-Paste Ready</p>
+    <h2 class="section-title">Production Prompts</h2>
+    <p class="section-desc">Three prompts. Start Frame → End Frame → Main Video. Copy directly into Cinema Studio 3.0.</p>
+
+    <!-- REFERENCE SLOTS -->
+    <div class="ref-grid reveal" style="margin-bottom:44px;">
+      <div class="ref-card">
+        <p class="ref-slot">@ref1 — Character</p>
+        <p class="ref-title">Your Character Sheet</p>
+        <ul class="ref-list">
+          <li>Nano Banana output — your 3 photos compiled</li>
+          <li>Face, build, outfit locked</li>
+          <li>Auto-linked or upload manually to Ref Slot 1</li>
+        </ul>
+      </div>
+      <div class="ref-card">
+        <p class="ref-slot">@ref2 — Environment</p>
+        <p class="ref-title">Rooftop Reference</p>
+        <ul class="ref-list">
+          <li>Dark rain-slicked urban rooftop at night</li>
+          <li>City lights below, overcast sky above</li>
+          <li>Search: "cinematic rooftop night photography"</li>
+        </ul>
+      </div>
+      <div class="ref-card">
+        <p class="ref-slot">@ref3 — Lighting Mood</p>
+        <p class="ref-title">Denzel or Idris Production Still</p>
+        <ul class="ref-list">
+          <li>Warm amber low key on dark skin tone</li>
+          <li>Search: "Denzel Washington cinematic portrait"</li>
+          <li>Or: "Idris Elba Luther production still"</li>
+          <li>This locks the exact lighting mood for CS3</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- START FRAME -->
+    <h3 style="font-size:17px;font-weight:600;color:var(--white);margin-bottom:14px;">
+      Start Frame <span style="color:var(--grey-3);font-size:12px;font-weight:400;margin-left:8px;">→ Image tab · Shades ON</span>
+    </h3>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Start Frame · Image Tab</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">A powerfully built Black man stands alone on a high rain-slicked rooftop terrace
+at late golden hour. @ref1. Deep ebony complexion. Broad face, strong square jaw,
+full thick black beard. Short natural coil hair with low skin fade. Wearing a
+fitted all-black premium coat — structured, sharp, minimal. Dark matte aviator
+sunglasses on. Eyes completely hidden behind the lenses.
+
+He stands absolutely still. Not posed — present. Weight evenly distributed.
+Hands at sides. Expression unreadable. The city stretches below and behind him
+@ref2. Sky transitioning: warm amber near horizon, deep blue-grey overhead.
+Rain-slicked surface beneath him. Subtle wind movement in coat.
+
+Camera: medium shot, slightly low angle — looking slightly upward at him.
+He fills the left 60% of frame. City and sky in right 40%.
+
+ARRI Alexa 35. 50mm anamorphic. f/1.8 — city lights behind dissolve into
+warm amber bokeh orbs. Warm amber key light from below-left catching jaw
+and cheekbones. Cool blue-grey fill from above-right. Deep shadows in the
+eye sockets behind the sunglasses @ref3. Teal + orange grade. Heavy film
+grain. This man costs the camera nothing.</div>
+    </div>
+
+    <!-- END FRAME -->
+    <h3 style="font-size:17px;font-weight:600;color:var(--white);margin:36px 0 14px;">
+      End Frame <span style="color:var(--grey-3);font-size:12px;font-weight:400;margin-left:8px;">→ Image tab · Eyes REVEALED</span>
+    </h3>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">End Frame · Image Tab</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">Same man. Same rooftop. Same moment — seconds later. @ref1.
+
+The sunglasses are now held loosely in his right hand, lowered. His eyes are
+visible for the first time — dark brown, heavy-lidded, looking slightly off-camera
+toward the horizon. Calm. Certain. Fully present. Not performing. Just existing
+with total authority.
+
+Everything else identical: same outfit, same environment @ref2, same camera
+position. Only his eyes are now revealed. The amber city light now catches
+across the bridge of his nose and upper cheekbones. The eyes read clearly —
+deep, warm, and completely still @ref3.
+
+ECU framing — extremely tight on his face. His eyes fill the center of frame.
+ARRI Alexa 35. 50mm anamorphic. f/1.8. Same bokeh. Same grade. Heavy grain.
+This is the payoff. The entire 12 seconds led here.</div>
+    </div>
+
+    <!-- MAIN VIDEO -->
+    <h3 style="font-size:17px;font-weight:600;color:var(--white);margin:36px 0 14px;">
+      Main Video Prompt <span style="color:var(--grey-3);font-size:12px;font-weight:400;margin-left:8px;">→ Video tab · CS3 · ~1700 chars</span>
+    </h3>
+    <div class="callout c-amber reveal">
+      <span class="callout-icon">🎬</span>
+      <p class="callout-text"><strong>Panel settings before pasting:</strong> Start Frame = shades on · End Frame = eyes revealed · Genre = Drama · Camera = Dolly · Speed Ramp = Slow-mo · Emotion = Sadness · Shot Mode = Single Shot · Physics = OFF · Duration = 12s</p>
+    </div>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Main Prompt · Video Tab · CS3 · Trimmed</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">Style & Mood: ARRI Alexa 35. 50mm anamorphic. Teal + orange grade — warm amber on face and coat, cool blue-grey in shadows. Heavy film grain. Drama. No VFX. Camera is the only thing that moves. Slow-motion throughout. Bullet Time on the sunglasses removal.
+
+Narrative: A man stands above the city — still, unreadable, complete. One gesture. The sunglasses come off. The world sees who it's been dealing with.
+
+Dynamic Description:
+
+SHOT 1 [00:00–00:03] Wide. @ref1 on rain-slicked rooftop @ref2. Medium shot, slightly low angle. Absolutely still. Wind in coat. Camera begins imperceptible slow dolly push-in. Sunglasses on. Unreadable.
+
+SHOT 2 [00:03–00:05] Tighter. Camera closes to medium close-up. Dark aviator sunglasses fill the frame. Amber light @ref3 catching jaw and cheekbones below the frames. Eye area in deep shadow. Camera continues pushing.
+
+SHOT 3 [00:05–00:09] The Removal. Bullet Time engages. One hand rises — slow, deliberate. Sunglasses lift away from his face in extreme slow motion. Maximum Bullet Time. Dark brown eyes now visible @ref1. Heavy-lidded. Calm. Looking toward the horizon. Amber light catches across bridge of nose and upper cheekbones. The climax.
+
+SHOT 4 [00:09–00:11] Extreme close-up. His eyes fill the frame. Camera locked. No movement. Warm amber light. Cool blue shadow. Hold.
+
+SHOT 5 [00:11–00:12] Hard cut to black. Title card. Film grain. Fade.
+
+Static Description: Rain-slicked rooftop terrace. City to horizon below. Sky: amber to blue-grey. No railing. No people.
+
+Audio: Low piano 00:00. Cello enters 00:05. Near silence at 00:09. City, wind, rain. Single deep tone 00:11. Black.</div>
+    </div>
+
+    <!-- DIRECTOR NOTES -->
+    <h3 style="font-size:15px;font-weight:600;color:var(--grey-2);margin:36px 0 10px;letter-spacing:-0.01em;">
+      Director Notes <span style="color:var(--grey-3);font-size:12px;font-weight:400;margin-left:8px;">Reference only — do not paste into CS3</span>
+    </h3>
+    <div class="callout c-dim reveal" style="margin-bottom:14px;">
+      <span class="callout-icon" style="font-size:13px;">ℹ</span>
+      <p class="callout-text" style="font-size:12px;">The trimmed prompt above is what goes into CS3. The notes below explain the <em>why</em> behind every shot decision. Read these before generating — then let the start frame, end frame, and panel settings carry the weight.</p>
+    </div>
+    <div class="prompt-box reveal">
+      <div class="prompt-header">
+        <span class="prompt-lang">Director Notes · Full Intent · Reference Only</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-body">SHOT 1 — He is the still point in a turning world. The city behind him is alive and
+moving. He is not. The camera push-in is barely perceptible — it starts the moment
+the clip begins and never stops. The audience doesn't notice it moving. They only
+notice, in retrospect, that he is closer than he was. The shades mean we cannot
+read him. That is the entire tension of the first 5 seconds.
+
+SHOT 2 — The push has closed ground. His face fills more of the frame. The dark
+aviator shades are fully visible — matte black, impenetrable. The amber city light
+catches across his jaw and cheekbones below the lenses. The eye sockets sit in
+complete shadow. The audience still cannot read him. This is intentional. The
+audience should feel the weight of not knowing.
+
+SHOT 3 — This is the climax. One hand rises. Slow. Deliberate. Unhurried. He is
+doing this on his schedule, not ours. The sunglasses lift in extreme slow motion.
+The moment the lenses clear — Bullet Time at maximum. His eyes appear. Heavy-lidded,
+dark brown, looking slightly toward the horizon — not at the camera. As if whatever
+is out there is already handled. This is the entire film in one gesture.
+
+SHOT 4 — No movement. Camera locked. The ECU is the period at the end of the
+sentence. The warmth of amber light on the skin. The grain visible at this proximity.
+The eyes looking at something we cannot see. It is already handled.
+
+SHOT 5 — The hard cut to black is not an ending. It is a confirmation. He was always
+going to win. We just needed to see his eyes to understand that.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<footer>
+  <div class="wrap">
+    <p>The Presence &nbsp;·&nbsp; <span>Cinema Studio 3.0 + Seedance 2.0</span> &nbsp;·&nbsp; Option A</p>
+    <p style="margin-top:7px;font-size:10px;">Saved to <span>claude-workspace/projects/ACTION-TRAILER/the-presence.html</span></p>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  function copyPrompt(btn) {
+    const text = btn.closest('.prompt-box').querySelector('.prompt-body').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+      }, 2500);
+    });
+  }
+</script>
+</body>
+</html>

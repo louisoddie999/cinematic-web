@@ -1,0 +1,214 @@
+==============================================================
+THE PRESENCE — START FRAME IMG2IMG PROMPTS
+$20M CINEMATIC QUALITY — FACE-LOCKED TO YOUR PHOTO
+==============================================================
+
+RULE: Upload YOUR ACTUAL PHOTO as the reference/input image.
+      The AI transforms the outfit and environment — your face is never touched.
+      This is how you get $20M quality with YOUR face in it.
+
+==============================================================
+PROMPT 1 — NANO BANANA PRO (Highest Cinematic Quality)
+==============================================================
+
+TOOL:         Nano Banana Pro on Higgsfield
+INPUT:        Upload your front-facing photo as @ref1
+RATIO:        16:9 (use 21:9 for ultra-wide cinematic version)
+RESOLUTION:   4K
+BUDGET:       $500M
+
+PROMPT (paste into Nano Banana Pro):
+
+@ref1 — same man, same face, same structure. Do not alter the face.
+
+Outfit transformation: He now wears a fitted all-black structured premium
+coat — heavy weight fabric, sharp shoulder seams, high collar, zero logos.
+Dark matte aviator sunglasses — thick matte black frames, opaque dark lenses.
+Eyes completely hidden. Nothing visible behind the lenses.
+
+Environment: High rooftop terrace, 40 floors above the city. Rain-slicked
+dark concrete underfoot, wet surface catching warm amber city light in
+long horizontal reflections. The city sprawls below to every horizon —
+thousands of warm orange bokeh points from buildings and traffic, dissolving
+soft behind him. The sky above: deep blue-grey overcast, pressing down.
+Golden-hour amber line along the distant skyline, transitioning upward
+through smoked blue to near-black overhead. No railing visible — he is
+at the edge of the world.
+
+He stands absolutely still. Not posed. Present. Weight even on both feet.
+Hands at sides. Head level. His face unreadable behind the shades. He
+fills the LEFT 60% of the frame. The right 40% is open city and sky.
+
+Framing: Medium shot. Camera positioned slightly LOW — looking up at him
+5–8 degrees. This adds stature without theatrics. He is in the lower-mid
+frame. Sky above. City behind.
+
+Lens: ARRI Alexa 35. 50mm anamorphic. f/1.8 — shallow. The city lights
+BEHIND him dissolve into warm amber bokeh orbs of varying sizes, soft and
+luminous. Nothing behind him is sharp. Only HIM is sharp.
+
+Lighting:
+PRIMARY KEY — warm amber, source: city glow rising from below-left.
+Strikes jaw from underneath-left at approximately 35 degrees below horizon.
+Catches the hard plane of cheekbone. Catches the top lip. Creates a rich
+amber warmth on deep dark skin. The underside of the jaw catches most of it.
+
+FILL — cool blue-grey, source: overcast sky above-right.
+Soft fill across the right side of the face and shoulder. No hard edge.
+Just a cool grey wash that defines separation between him and the darkness.
+
+SHADOW — the eye sockets behind the sunglasses are completely black.
+The glasses absorb all light. Zero reflections in the lenses.
+The darkness where his eyes should be is total. This is intentional.
+
+Color grade: Teal + orange. Shadows lean blue-teal — especially in the
+concrete, the sky, the darker areas of his clothing. Midtones warm — the
+skin catches rich amber in the lit areas. Blacks are crushed deep.
+Highlights are never blown — the city lights bloom warm but controlled.
+
+Film grain: Heavy. Analog texture visible at full resolution.
+Photorealistic. Cinematic. Not illustrated. Not painted.
+
+This is a production still from a $200M film.
+Shot on ARRI. Graded by a colorist. This man costs the camera nothing.
+
+==============================================================
+PROMPT 2 — KLING AI IMG2IMG (Best Face Lock — Strongest Preservation)
+==============================================================
+
+TOOL:         Kling AI (kling.kuaishou.com) — Image tab — img2img
+INPUT:        Upload your FRONT-FACING photo (Image 2 — clean, direct)
+CREATIVITY:   0.3 (low — preserves face strictly, only transforms context)
+RATIO:        16:9
+
+PROMPT:
+
+Keep this man's face EXACTLY as it is. Same skin tone. Same jaw shape.
+Same beard. Same nose. Same eyes. Do not alter anything above the neck.
+
+Transform only:
+1. OUTFIT — Replace with fitted all-black structured premium coat. Heavy
+   fabric. Sharp shoulders. High collar. Zero logos. Matte black aviator
+   sunglasses — thick frames, fully opaque dark lenses. Hands at sides.
+
+2. BACKGROUND — Remove current background entirely. Replace with high urban
+   rooftop terrace at late golden hour. Rain-slicked dark concrete below.
+   Sprawling city extending to the horizon. Sky: amber near horizon,
+   deep blue-grey overhead. City lights blurred to warm orange bokeh points.
+   No railing visible. Edge of the world.
+
+3. LIGHTING — Warm amber key light from below-left, catching jaw and
+   cheekbone. Cool blue-grey fill from above-right. Deep shadows where
+   eyes sit behind the sunglasses — completely black, no lens reflection.
+
+4. CAMERA — Frame as a medium shot, slightly low angle looking up 5–8
+   degrees. Subject fills left 60% of frame. City + sky fills right 40%.
+
+Color grade: Teal shadows. Warm amber midtones on skin. Crushed blacks.
+Film grain. 50mm anamorphic lens feel. f/1.8 — background fully dissolved.
+Cinematic. Photorealistic. This is a $20M production still.
+
+==============================================================
+PROMPT 3 — CS3 / SEEDANCE IMG2IMG (Native to Your Workflow)
+==============================================================
+
+TOOL:         Cinema Studio 3.0 — IMAGE tab — img2img mode
+INPUT:        Upload your front-facing photo as the source image
+DENOISE:      0.35 (low — face is locked, only costume + env transforms)
+MODEL:        Seedance 2.0
+RESOLUTION:   4K, 16:9
+
+PROMPT:
+
+Source image provides the face — do not regenerate or alter it.
+Preserve: skin tone, facial structure, beard, all facial features.
+
+Apply transformation:
+
+COSTUME: All-black structured premium coat. Heavy tailored fabric, sharp
+shoulder seam, minimal — no detail, no logos. Dark matte aviator
+sunglasses on. Opaque lenses. Eyes fully hidden.
+
+ENVIRONMENT: High rooftop terrace. Rain-slicked dark concrete surface.
+City sprawling below and behind to the horizon. Thousands of warm amber
+city light points dissolving into bokeh behind him. Sky: amber low,
+transitioning to deep overcast blue-grey above.
+
+LIGHTING: City glow amber key from below-left — catches jaw, cheekbone,
+lower face. Cool blue-grey sky fill from above-right. Shadows in eye
+sockets: completely black behind the sunglasses. No lens reflections.
+
+FRAMING: Medium shot. Camera 5–8 degrees below subject eye level, looking
+slightly up. Subject in left 60% of frame. Right 40% = city and sky open.
+
+LENS SIMULATION: 50mm anamorphic. f/1.8. Shallow DOF. Background city
+lights fully dissolved to warm amber bokeh orbs. Subject tack sharp.
+
+COLOR SCIENCE: Teal in shadows and concrete. Warm orange/amber on lit skin.
+Crushed blacks. Highlights controlled. Film grain — heavy, analog.
+ARRI Alexa 35 sensor simulation. Teal + orange grade.
+
+INTENTION: This single frame must communicate — before any motion begins —
+that the audience is about to watch someone who does not lose. Everything
+about how he stands, how the light hits him, how the city sits behind him:
+it should feel like the opening still of a $200M film.
+
+==============================================================
+WORKFLOW — WHICH TO USE FIRST
+==============================================================
+
+STEP 1: Try KLING first (Prompt 2)
+   → Upload Image 2 (clean front face)
+   → Set creativity to 0.3
+   → If face drifts: drop creativity to 0.2
+   → If environment is too weak: raise to 0.4 then retry
+
+STEP 2: If Kling output is strong — use it as YOUR start frame
+   → Upload that transformed image into CS3 VIDEO tab as start frame
+   → Your face is now locked from frame 1
+
+STEP 3: If you want even higher quality
+   → Take your best Kling output → run through Nano Banana Pro (Prompt 1)
+   → Use Kling result as @ref1 instead of raw photo
+   → Nano Banana refines the cinematic quality further
+
+STEP 4: Final start frame goes into CS3 VIDEO tab
+   → Drag into start frame slot
+   → Add the end frame (shades off)
+   → Run the full 12-second shot
+
+==============================================================
+THE $20M DIFFERENCE — WHAT SEPARATES STUDIO FROM AMATEUR
+==============================================================
+
+A $1M start frame has: a person standing in front of a city.
+A $20M start frame has:
+
+1. LIGHTING MATH — not just "nice light" but exact angle, temperature,
+   source motivation, and separation between key, fill, and shadow.
+   The amber from below means the jaw catches light from the city below —
+   not from above like a normal portrait. That inversion is authority.
+
+2. BOKEH SCIENCE — f/1.8 on 50mm anamorphic means city lights dissolve
+   at a specific rate. Not "blurry background" — specific orb-shaped warmth
+   behind him at controlled luminosity.
+
+3. ATMOSPHERIC DEPTH — the rain has just stopped. The concrete is wet.
+   Those horizontal amber reflections in the concrete = extra planes of
+   interest in the foreground at zero cost. They add depth and premium.
+
+4. COMPOSITIONAL AUTHORITY — he doesn't center the frame.
+   Left 60% / right 40% split gives the city room to breathe.
+   The slight upward angle adds stature. These are not accidents.
+
+5. COLOR SCIENCE — teal in the shadows, orange on the skin. These two
+   colors are the furthest apart on the spectrum. They vibrate against
+   each other. That vibration reads as cinematic even at thumbnail size.
+
+6. THE SUNGLASSES — eyes hidden behind completely opaque matte lenses
+   means the audience CANNOT read him. Mystery creates authority.
+   The remove is the payoff. The start frame must earn that payoff.
+
+==============================================================
+Saved: ACTION-TRAILER/start-frame-img2img-prompts.txt
+==============================================================
