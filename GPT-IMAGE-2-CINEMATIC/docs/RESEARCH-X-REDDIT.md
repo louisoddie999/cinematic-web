@@ -46,7 +46,7 @@
 
 ## TOP 8 TEXT-INTEGRATION TECHNIQUES (Neon, Carved, Projected, Embedded)
 
-1. **Neon Chinese kanji on rain-soaked Tokyo street** — glowing tube lettering reflecting in asphalt, legible at 95%+ accuracy, atmospheric haze around letters, cinematic wide-shot framing
+1. **Neon Chinese kanji on rain-soaked Tokyo street** — glowing tube lettering reflecting in asphalt, carefully checked for legibility, atmospheric haze around letters, cinematic wide-shot framing
 2. **Carved Roman stone tablet in museum setting** — weathered serif chisels, museum track-light reveal, shallow focus on text, archaeological authenticity, white-on-gray stone contrast
 3. **Newspaper front-page mockup with readable headline** — article columns, bylines, images embedded, coffee cup beside, editorial photography framing, fine print legible at 2x zoom
 4. **Holographic UI projected light** — sci-fi luminescent text, layered depth (foreground/mid/background text planes), cyan/magenta color split, refraction edges
@@ -78,7 +78,7 @@
 ## KEY TECHNICAL INSIGHTS
 
 **Text Rendering 2026 Benchmark:**
-- GPT Image 2 achieves 95%+ legibility on Latin, Chinese, Japanese, Korean, Arabic scripts
+- Creator examples suggest improved multilingual legibility, but the research set does not establish a reproducible accuracy percentage; verify every character manually
 - Multi-line English headlines reliable; mixed-language layouts consistent
 - Short character counts (8-12 chars max per line) yield highest fidelity
 - Literal text in quotes or ALL CAPS strengthens accuracy

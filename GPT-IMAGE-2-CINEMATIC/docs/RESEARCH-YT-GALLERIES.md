@@ -102,7 +102,7 @@
 
 ## Key Learnings From GPT Image 2 Era (Apr 2026)
 
-- **Text Accuracy Above 95%** across Latin, CJK, Arabic scripts — enables true magazine covers, billboards, newspaper scenes, packaging with readable tiny text
+- **Improved multilingual text rendering in inspected examples** — useful for concepting magazine covers, billboards, newspapers, and packaging, but every generated character still requires manual verification
 - **Film Stock Language Works Best** — "Kodak Portra 400 aesthetic" more reliable than "8K masterpiece"; grain structure responds stock-specifically
 - **Avoid Keyword Spam** — "trending on artstation, 8K, cinematic, masterpiece" returns generic AI look; use director language instead
 - **Lighting Must Be Directional** — "harsh cyan rim light from left, soft tungsten key from right" beats "cinematic lighting"; vectors matter
